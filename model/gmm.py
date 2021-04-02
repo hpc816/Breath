@@ -27,7 +27,7 @@ class GMMSet:  # GMM集合，每个GMM代表一个用户【或一种对象】
         '''
         根据输入特征向量和标签，得到一个混合高斯分布模型，而后将新得到的模型加入gmms列表中
         :param x: 输入的特征（用于训练）
-        :param label:标签
+        :param label:标签 用户名称/标识
         :return:gmms中新增一个GMM
         '''
         self.y.append(label)
@@ -104,6 +104,7 @@ class GMMModel:
         '''
         self.gmmset = GMMSet()  # 实例化一个GMM模型组对象，用于下面的训练过程
         start_time = time.time()  # 开始时间  time.time()：返回当前时间的时间戳（1970纪元后经过的浮点秒数）
+        # print(type(self.features["hpc"]))
         for name, feats in self.features.items():  # 迭代特征向量字典
             try:
                 self.gmmset.fit_new(np.array(feats), name)  # 对每一个用户，训练出一个GMM模型后，加入到GMM模型组中

@@ -2,12 +2,10 @@
 import glob
 import itertools
 import os
-import librosa as  li
+import librosa as li
 import librosa.display as lid
 from matplotlib import pyplot as plt
-
 import sys
-
 from model.gmm import GMMModel
 
 
@@ -29,22 +27,29 @@ def task_enroll(input_dir, output_model):
     # 创造目录迭代器，读取子目录【各个用户的音频文件目录】
     dirs = itertools.chain(*(glob.glob(d) for d in input_dir))
     dirs = [d for d in dirs if os.path.isdir(d)]
+    # 打印出来的为用户文件夹清单——用户清单
     print(dirs)
 
     # 处理特殊情况
+    # 当所扫描的目录下没有文件夹的时候
     if (len(dirs) == 0):
         print("%s目录下没有文件夹，退出执行" % input_dir)
         sys.exit(1)  # 异常退出
 
     # 迭代目录，进行标签绑定
+    # 遍历list 处理读入的每一个音频文件夹——用户
     for d in dirs:  # 每个文件目录代表一个用户
         label = os.path.basename(d.rstrip('/'))  # 标签绑定
+        # 打印出来的为当前处理的用户名/标识
         # print(label)
         wavs = glob.glob(d + "/*.wav")  # 指定读取wav格式的文件
+        # 打印出当前用户在目录下所采集到的所有的声音样本
         print(wavs)
+        # 无样本时 取下一个用户
         if len(wavs) == 0:
             print("%s中没有.wav文件" % d)
             continue
+        # 有样本 读取wav音频文件
         for wav in wavs:  # 读取wav文件，并对每个文件进行特征提取
             try:
                 # wavfile读取.wav音频

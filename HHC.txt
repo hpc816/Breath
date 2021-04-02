@@ -1,5 +1,56 @@
+2021/4/2
 Python音频特征提取（MFCC, IMFCC, GFCC, LFCC, PNCC ...）
 https://zhuanlan.zhihu.com/p/122548028
 
 spafe: 简化的Python音频功能提取
 spafe，直接提取，并且各种特征提取都有jupyter notebook范例
+
+class GMMSet:  # GMM集合，每个GMM代表一个用户【或一种对象】
+self.gmms = []  # GMM列表，每个元素是一个高斯混合模型
+self.gmm_order = gmm_order  # 模型中高斯分布的数量
+self.y = []  # 标签列表【一共有几类，每一类由用户名代表的标签表示】
+
+
+class GMMModel:
+self.features = defaultdict(list)  # 当字典的key不存在时，返回的是[],即一个空的列表
+self.gmmset = GMMSet()  # 获取GMM模型组
+
+
+1.model = GMMModel()创建GMMModel类对象
+
+2.model.enroll(label, y, sr)  # 进行特征提取，并以name作为键值，将特征储存到特征字典中
+label:hpc
+feat = np.array(MFCC(y, sr))  # 提取MFCC特征,并转换为np数组
+self.features[name].extend(feat)  # 加入字典
+{"hpc":[feature]}
+model.feature={"hpc":[feature]}
+其中包含了hpc的所有的音频的特征1.2.3……
+
+3.model.train()  # 训练GMM模型组
+model为GMMModel类对象 在调用train里面
+self.gmmset = GMMSet()  # 实例化一个GMM模型组对象，用于下面的训练过程
+
+
+
+
+特征提取部分
+mfcc_feature = li.feature.mfcc(y=y, sr=sr, n_mfcc=39)
+y:输入音频时间序列
+sr: 输入音频采样率
+n_mfcc:要返回的MFCC数量  int > 0 [scalar]
+
+正常呼吸2：31s
+所得到的特征 39*1359
+y=696191=31*22050(sr)
+
+
+win_len
+win_hop
+尝试解决矩阵对齐问题？
+绕过去尝试用对齐形式的帧以解决（时间长度相同）
+明天再说
+
+
+
+2021/4/3
+

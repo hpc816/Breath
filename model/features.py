@@ -1,6 +1,7 @@
 # 本模块用于提取音频信号的特征向量
 import sys
 import librosa as li
+import numpy as np
 import librosa.display as lid
 # from python_speech_features import mfcc, delta, base
 
@@ -19,6 +20,8 @@ def MFCC(y, sr):
     :param sr: 输入音频采样率
     :return: 输入音频的mfcc特征向量
     '''
+    # spafe
+    mfcc_feature = mfcc(y,sr)
 
     # 1.librosa.feature.mfcc  【重要】
     # 函数原型：librosa.feature.mfcc(y=None, sr=22050, S=None, n_mfcc=20, dct_type=2, norm='ortho', **kwargs)
@@ -31,7 +34,7 @@ def MFCC(y, sr):
     #           【 标准化不支持dct_type = 1。】
     #          kwargs:额外的关键参数 【参数melspectrogram，如果按时间序列输入操作】
     #          返回： MFCC序列 M:np.ndarray [shape=(n_mfcc, t)]  【？】
-    mfcc_feature = li.feature.mfcc(y=y, sr=sr, n_mfcc=39)
+    # mfcc_feature = li.feature.mfcc(y=y, sr=sr, n_mfcc=39)
 
     # 2.from python_speech_features import mfcc
     # mfcc_feature = mfcc(wavedata, framerate, winlen=0.064, winstep=0.032, nfilt=13, nfft=1024)  # mfcc系数
@@ -56,7 +59,7 @@ def MFCC(y, sr):
 
 
 # 音频文件特征提取【GFCC】
-def GFCC(fs, sig):
+def GFCC(y, sr):
     '''
     提取输入文件的GFCC特征
     :param y:输入音频时间序列
@@ -64,18 +67,7 @@ def GFCC(fs, sig):
     :return: GFCC特征向量
     '''
     # spafe库能否实现gfcc？
-    # gfcc_feature = mfcc(sig, 13)
-    mfccs = mfcc(sig=sig,
-                 fs=fs,
-                 num_ceps=num_ceps,
-                 nfilts=nfilts,
-                 nfft=nfft,
-                 low_freq=low_freq,
-                 high_freq=high_freq,
-                 dct_type=dct_type,
-                 use_energy=use_energy,
-                 lifter=lifter,
-                 normalize=normalize)
+    gfcc_feature = gfcc(y, sr)
     # 参数列表：
     # sig (array)：一种单声道音频信号（Nx1），用于计算特征
     # fs (int)：正在处理信号的采样率 默认值为 16000_________
@@ -94,9 +86,9 @@ def GFCC(fs, sig):
     # use_energy (int):用真对数能量覆盖C0默认值为0_________
     # lifter (int):如果值>0，则应用提升,默认值为22_________
     # normalize (int):如果为1,则应用规范化,默认值为0_________
-    if len(mfccs) == 0:
+    if len(gfcc_feature) == 0:
         print >> sys.stderr, "ERROR.. failed to extract gfcc feature:", len(y)
-    return mfccs
+    return gfcc_feature
 
 
 # 音频文件特征提取【plp】
@@ -111,31 +103,12 @@ def PLP(y, sr):
 
 
 if __name__ == "__main__":
-    #################################
-    # init input vars
-    num_ceps = 13
-    low_freq = 0
-    high_freq = 2000
-    nfilts = 24
-    nfft = 512
-    dct_type = 2,
-    use_energy = False,
-    lifter = 5
-    normalize = False
-    #########################################
-    input = r'D:\Github_Desktop\BreathPrint\data\normal\hpc\正常呼吸2.wav'
-    fs, sig = scipy.io.wavfile.read(input)
-    y, sr = li.load(input)
+    input = r'D:\Github_Desktop\BreathPrint\data\normal\hpc\正常呼吸3.wav'
+    y, sr = li.load(input,sr=16000)
     print("librosa:")
     print(y)
     print("-------------------")
     print(sr)
-    mfcc_li = MFCC(y, sr)
-    print(mfcc_li)
-    ##############################
-    print("spafe:")
-    print(fs)
-    print("-------------------")
-    print(sig)
-    gfccs  = gfcc(sig, 13)
-    vis.visualize(gfccs, 'LMFCC Coefficient Index', 'Frame Index')
+    gfcc = GFCC(y, sr)
+    print(gfcc)
+
