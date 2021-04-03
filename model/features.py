@@ -1,15 +1,14 @@
 # 本模块用于提取音频信号的特征向量
 import sys
 import librosa as li
-import numpy as np
 import librosa.display as lid
-# from python_speech_features import mfcc, delta, base
+from python_speech_features import mfcc, delta, base
 
 ###########################################################
 import scipy.io.wavfile
 import scipy
 from spafe.utils import vis
-from spafe.features.mfcc import mfcc
+import spafe.features.mfcc as spfm
 from spafe.features.gfcc import gfcc
 
 
@@ -20,8 +19,6 @@ def MFCC(y, sr):
     :param sr: 输入音频采样率
     :return: 输入音频的mfcc特征向量
     '''
-    # spafe
-    mfcc_feature = mfcc(y,sr)
 
     # 1.librosa.feature.mfcc  【重要】
     # 函数原型：librosa.feature.mfcc(y=None, sr=22050, S=None, n_mfcc=20, dct_type=2, norm='ortho', **kwargs)
@@ -34,8 +31,8 @@ def MFCC(y, sr):
     #           【 标准化不支持dct_type = 1。】
     #          kwargs:额外的关键参数 【参数melspectrogram，如果按时间序列输入操作】
     #          返回： MFCC序列 M:np.ndarray [shape=(n_mfcc, t)]  【？】
-    # mfcc_feature = li.feature.mfcc(y=y, sr=sr, n_mfcc=39)
-
+    #mfcc_feature = li.feature.mfcc(y=y, sr=sr, n_mfcc=39)
+    mfcc_feature=mfcc(y,sr)
     # 2.from python_speech_features import mfcc
     # mfcc_feature = mfcc(wavedata, framerate, winlen=0.064, winstep=0.032, nfilt=13, nfft=1024)  # mfcc系数
     # 其中wavedata为语音数据
@@ -58,6 +55,16 @@ def MFCC(y, sr):
     return mfcc_feature
 
 
+def MFCC2(y,sr):
+    mfcc_feature = spfm.mfcc(y, sr)
+
+    if len(mfcc_feature) == 0:
+        print >> sys.stderr, "ERROR.. failed to extract mfcc feature:", len(y)
+
+    return mfcc_feature
+
+
+
 # 音频文件特征提取【GFCC】
 def GFCC(y, sr):
     '''
@@ -67,25 +74,26 @@ def GFCC(y, sr):
     :return: GFCC特征向量
     '''
     # spafe库能否实现gfcc？
-    gfcc_feature = gfcc(y, sr)
-    # 参数列表：
-    # sig (array)：一种单声道音频信号（Nx1），用于计算特征
-    # fs (int)：正在处理信号的采样率 默认值为 16000_________
-    # num_ceps (float)：要返回的倒谱数 默认值为13_________
-    # pre_emph (int)：如果为1，则应用预强调。默认值为1_________
-    # pre_emph_coeff (float):应用预加重过滤器[1-预加重]（0=无）
-    # win_len (float):窗口长度（秒）。默认值为0.025_________
-    # win_hop (float):以秒为单位在连续窗口之间移动。默认值为0.01。_________
-    # win_type (float):窗口类型以应用窗口。默认值为“hamming”。_________
-    # nfilts (int):过滤器组中过滤器的数量。默认值为40。_________
-    # nfft (int):FFT点数。默认值为512。_________
-    # low_freq (int):mel滤波器的最低频带边缘（Hz）。默认值为0。_________
-    # high_freq (int):mel滤波器的最高频带边缘（Hz）。默认值为samplerate/2=8000。_________
-    # scale (str):选择最大bin振幅是上升、下降还是恒定（=1） 默认为恒定_________
-    # dct_type(int):使用的DCT类型-1或2（HTK为3，feac为4）。默认值为2。_________
-    # use_energy (int):用真对数能量覆盖C0默认值为0_________
-    # lifter (int):如果值>0，则应用提升,默认值为22_________
-    # normalize (int):如果为1,则应用规范化,默认值为0_________
+    # gfcc_feature = mfcc(sig, 13)
+    # spafe.features.gfcc.gfcc(sig,  #单声道音频时间序列（Nx1）
+    #                          fs=16000, #采样率，默认设置为16000
+    #                          num_ceps=13,  #返回的倒谱数维度，默认为13
+    #                          pre_emph=0, #如果为1，则应用预强调。默认值为1
+    #                          pre_emph_coeff=0.97, #    #pre_emph_coeff=0.97, #
+    #                          win_len=0.025, #窗口长度（秒）。默认值为0.025
+    #                          win_hop=0.01, #以秒为单位在连续窗口之间移动。默认值为0.01
+    #                          win_type='hamming',  #应用的窗口类型，默认为汉明窗口
+    #                          nfilts=40, #滤波器组的个数，默认为40
+    #                          nfft=512, #一次FFT的样本点数，默认为512
+    #                          low_freq=None,  #滤波器最低频率值，默认为0
+    #                          high_freq=None,  #滤波器最高频率值，默认为采样率/2
+    #                          scale='constant',
+    #                          dct_type=2,
+    #                          use_energy=False,
+    #                          lifter=22,
+    #                          normalize=1)
+    gfcc_feature=gfcc(y,sr,num_ceps=32,nfilts=40)
+
     if len(gfcc_feature) == 0:
         print >> sys.stderr, "ERROR.. failed to extract gfcc feature:", len(y)
     return gfcc_feature
@@ -103,12 +111,44 @@ def PLP(y, sr):
 
 
 if __name__ == "__main__":
-    input = r'D:\Github_Desktop\BreathPrint\data\normal\hpc\正常呼吸3.wav'
+    #################################
+    # init input vars
+    num_ceps = 13
+    low_freq = 0
+    high_freq = 2000
+    nfilts = 24
+    nfft = 512
+    dct_type = 2,
+    use_energy = False,
+    lifter = 5
+    normalize = False
+    #########################################
+    input = r'C:\Users\hpc\Desktop\Breath\data\normal\hpc\正常呼吸5.wav'
+    fs, sig = scipy.io.wavfile.read(input)
     y, sr = li.load(input,sr=16000)
-    print("librosa:")
-    print(y)
-    print("-------------------")
-    print(sr)
-    gfcc = GFCC(y, sr)
-    print(gfcc)
+    # print("librosa:")
+    # print(y)
+    # print("-------------------")
+    # print(sr)
+    # mfcc_li = MFCC(y, sr)
+    # print(mfcc_li)
+    ##############################
+    # print("spafe:")
+    # print(fs)
+    # print("-------------------")
+    # print(sig)
+    print('python_speech_features mfcc特征')
+    mfccs=MFCC(y,sr)
+    print(mfccs)
+    print(mfccs.shape)
 
+    print('spafe mfcc特征')
+    mfccs2 = MFCC2(y, sr)
+    print(mfccs2)
+    print(mfccs2.shape)
+
+    print('spafe gfcc特征')
+    gfccs  = GFCC(y,sr)
+    print(gfccs)
+    print(gfccs.shape)
+    #vis.visualize(gfccs, 'LMFCC Coefficient Index', 'Frame Index')
