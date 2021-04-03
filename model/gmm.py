@@ -9,6 +9,7 @@ import math
 import operator
 
 from model.features import MFCC
+from model.features import MFCC2
 
 
 class GMMSet:  # GMM集合，每个GMM代表一个用户【或一种对象】

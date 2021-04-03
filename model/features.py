@@ -2,13 +2,13 @@
 import sys
 import librosa as li
 import librosa.display as lid
-# from python_speech_features import mfcc, delta, base
+from python_speech_features import mfcc, delta, base
 
 ###########################################################
 import scipy.io.wavfile
 import scipy
 from spafe.utils import vis
-from spafe.features.mfcc import mfcc
+import spafe.features.mfcc as spfm
 from spafe.features.gfcc import gfcc
 
 
@@ -31,8 +31,8 @@ def MFCC(y, sr):
     #           【 标准化不支持dct_type = 1。】
     #          kwargs:额外的关键参数 【参数melspectrogram，如果按时间序列输入操作】
     #          返回： MFCC序列 M:np.ndarray [shape=(n_mfcc, t)]  【？】
-    mfcc_feature = li.feature.mfcc(y=y, sr=sr, n_mfcc=39)
-
+    #mfcc_feature = li.feature.mfcc(y=y, sr=sr, n_mfcc=39)
+    mfcc_feature=mfcc(y,sr)
     # 2.from python_speech_features import mfcc
     # mfcc_feature = mfcc(wavedata, framerate, winlen=0.064, winstep=0.032, nfilt=13, nfft=1024)  # mfcc系数
     # 其中wavedata为语音数据
@@ -53,6 +53,16 @@ def MFCC(y, sr):
         print >> sys.stderr, "ERROR.. failed to extract mfcc feature:", len(y)
 
     return mfcc_feature
+
+
+def MFCC2(y,sr):
+    mfcc_feature = spfm.mfcc(y, sr)
+
+    if len(mfcc_feature) == 0:
+        print >> sys.stderr, "ERROR.. failed to extract mfcc feature:", len(y)
+
+    return mfcc_feature
+
 
 
 # 音频文件特征提取【GFCC】
@@ -127,7 +137,18 @@ if __name__ == "__main__":
     # print(fs)
     # print("-------------------")
     # print(sig)
+    print('python_speech_features mfcc特征')
+    mfccs=MFCC(y,sr)
+    print(mfccs)
+    print(mfccs.shape)
+
+    print('spafe mfcc特征')
+    mfccs2 = MFCC2(y, sr)
+    print(mfccs2)
+    print(mfccs2.shape)
+
+    print('spafe gfcc特征')
     gfccs  = GFCC(y,sr)
     print(gfccs)
-    print(type(gfccs))
+    print(gfccs.shape)
     #vis.visualize(gfccs, 'LMFCC Coefficient Index', 'Frame Index')
