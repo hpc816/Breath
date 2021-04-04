@@ -1,5 +1,8 @@
 # 本模块构建GMM模型
 import pickle
+import joblib
+
+
 import time
 from collections import defaultdict
 
@@ -10,7 +13,8 @@ import operator
 
 from model.features import MFCC
 from model.features import MFCC2
-
+from model.features import GFCC
+from model.features import PLP
 
 class GMMSet:  # GMM集合，每个GMM代表一个用户【或一种对象】
     def __init__(self, gmm_order=32):
@@ -57,6 +61,7 @@ class GMMSet:  # GMM集合，每个GMM代表一个用户【或一种对象】
         score_max = math.exp(max(scores))  # 取出最大得分作为e的指数
         return round(score_max / (scores_sum), 3)  # round() 方法返回浮点数x的四舍五入值【3表示保留小数点后三位】
 
+
     def predict_one(self, x):
         '''
         预测类别
@@ -71,7 +76,47 @@ class GMMSet:  # GMM集合，每个GMM代表一个用户【或一种对象】
         p = max(result, key=operator.itemgetter(1))  # 获取评分最大值
         # 【operator.itemgetter()：返回一个可调用对象，用于从运算对象中获取元素】，括号里面的1表示选择result中的第二项，即分数项
         softmax_score = self.softmax(scores)  # 映射为0-1之间
-        return p[0], softmax_score  # 返回姓名和评分
+        return p[0], softmax_score,scores  # 返回姓名和评分,以及各模型下的得分
+
+    def predict_this(self,x,label):
+        '''
+        预测label对应模型下的得分
+        :param x: 输入的音频特征向量
+        :param label: 标签
+        :return: 返回得分列表【能不能实现计算出每一帧的得分？】
+        '''
+        # #未逐帧比较,仅计算特征向量整体的得分
+        # scores=[self.gmm_score(gmm,x)/len(x) for gmm in self.gmms]
+        # my_dict={}
+        # for index, value in enumerate(scores):
+        #     my_dict[self.y[index]]=value
+        #
+        # this_score=my_dict[label]
+        #
+        # #返回softmax score
+        # scores_sum = sum([math.exp(i) for i in scores])
+        # score_this = math.exp(this_score)
+        # return round(score_this / (scores_sum), 3)
+
+        #找到当前标签对应的用户模型
+        for i in range(len(self.y)):
+            if self.y[i]==label:
+                index=i
+
+        gmm=self.gmms[index]
+
+        scores=[]
+        # #逐帧比较，计算每一帧在模型下的得分
+        # for i in x:
+        #     scores.append(math.exp(self.gmm_score(gmm,np.array(i).reshape(1,-1)))) #将分数求e的指数，解决分数可能为负值的情况
+
+        #每次输入两个帧的特征向量
+        for i in range(len(x)):
+            scores.append(math.exp(self.gmm_score(gmm,x[i:i+2]))) #每次验证相邻的两个帧
+
+
+        return scores
+
 
     def before_pickle(self):  # 使用pickle保存模型之前
         pass
@@ -87,44 +132,125 @@ class GMMModel:
         gmmset:GMM模型组
         '''
         self.features = defaultdict(list)  # 当字典的key不存在时，返回的是[],即一个空的列表
-        self.gmmset = GMMSet()  # 获取GMM模型组
+        self.gmmset = GMMSet()  # 获取GMM模型组【每一个用户建立一个模型】
+        self.gmmothersset=GMMSet() #目标用户外的其他用户模型组 【里面每个元素是除了目标用户外的其他用户的特征向量训练出来的】
 
-    def enroll(self, name, y, sr):
+    def enroll(self, name, y, sr,featype):
         '''
         对输入音频进行特征提取，而后以键值对的方式加入features字典中
         :param name:标签【用户名/姓名】
         :param y:音频时间序列
         :param sr:采样率
+        :param featype:特征类型
         '''
-        feat = np.array(MFCC(y, sr))  # 提取MFCC特征,并转换为np数组
+        if featype=='mfcc1':
+            feat = np.array(MFCC(y, sr))  # 提取MFCC特征(使用speech),并转换为np数组
+        elif featype=='mfcc2':
+            feat = np.array(MFCC2(y, sr))  # 提取MFCC特征(使用spafe),并转换为np数组
+        elif featype=='gfcc':
+            feat=np.array(GFCC(y,sr))  #提取GFCC特征(使用spafe),并转换为np数组
+        elif featype=='plp':
+            feat=np.array(PLP(y,sr))
+
         self.features[name].extend(feat)  # 加入字典
 
     def train(self):
         '''
         模型训练
         '''
-        self.gmmset = GMMSet()  # 实例化一个GMM模型组对象，用于下面的训练过程
-        start_time = time.time()  # 开始时间  time.time()：返回当前时间的时间戳（1970纪元后经过的浮点秒数）
+        self.gmmset = GMMSet()  # 实例化一个GMM模型组对象，用于下面的训练过程 【User Model】
+        self.gmmothersset=GMMSet() #【Other Model】
+        start_time1 = time.time()  # 开始时间  time.time()：返回当前时间的时间戳（1970纪元后经过的浮点秒数）
         # print(type(self.features["hpc"]))
+        #训练目标用户模型
         for name, feats in self.features.items():  # 迭代特征向量字典
             try:
                 self.gmmset.fit_new(np.array(feats), name)  # 对每一个用户，训练出一个GMM模型后，加入到GMM模型组中
             except Exception as e:
-                print("%s failed %s" % (name, e))  # 打印处理那个用户时发生了错误
-        print(time.time() - start_time, " seconds")  # 打印训练所需的时间
+                print("Uer Model training: %s failed %s" % (name, e))  # 打印处理那个用户时发生了错误
+        print("Target User Model training time：",time.time() - start_time1, " seconds")  # 打印训练所需的时间
 
-    def predict(self, y, sr):
+        #训练其他用户模型
+        start_time2=time.time()
+        for name,feats in self.features.items():
+            other_feats=[] #创建一个列表保存其他用户的特征向量集合
+            #遍历字典，将不属于当前用户的其他用户特征向量拼接到一起
+            try:
+                for namei,featsi in self.features.items():
+                    if namei!=name:
+                        other_feats.extend(featsi) #这里用extend而不是append
+                self.gmmothersset.fit_new(np.array(other_feats),name) #对每一个用户，训练出一个Other Model
+            except Exception as e:
+                print("Others Model training: %s failed %s"%(name,e))
+        print("Others Model training time:",time.time()-start_time2,'seconds')
+
+
+
+
+    def predict(self, y, sr,featype):
         '''
         进行预测
         :param y:输入音频的时间序列
         :param sr: 采样率
+        :param featype:特征类型
         :return: 预测的标签【用户名/姓名】、评分
         '''
         try:
-            feat = MFCC(y, sr)
+            if featype == 'mfcc1':
+                feat = np.array(MFCC(y, sr))  # 提取MFCC特征(使用speech),并转换为np数组
+            elif featype == 'mfcc2':
+                feat = np.array(MFCC2(y, sr))  # 提取MFCC特征(使用spafe),并转换为np数组
+            elif featype == 'gfcc':
+                feat = np.array(GFCC(y, sr))  # 提取GFCC特征(使用spafe),并转换为np数组
         except Exception as e:
             print(e)
         return self.gmmset.predict_one(feat)
+
+
+    def Verify(self,y,sr,featype,label):
+        '''
+        用于实现BreathPrint论文中提到的算法:综合考虑Target User Model和Others User Model
+        :param y:输入音频的时间序列
+        :param sr:输入音频的采样率
+        :param featype:特征类型
+        :param label:输入文件的标签
+        :return:Verifivcation的结果【true/fasle】、评分
+        '''
+        #特征提取
+        try:
+            if featype == 'mfcc1':
+                feat = np.array(MFCC(y, sr))  # 提取MFCC特征(使用speech),并转换为np数组
+            elif featype == 'mfcc2':
+                feat = np.array(MFCC2(y, sr))  # 提取MFCC特征(使用spafe),并转换为np数组
+            elif featype == 'gfcc':
+                feat = np.array(GFCC(y, sr))  # 提取GFCC特征(使用spafe),并转换为np数组
+        except Exception as e:
+            print(e)
+
+        target_scores=self.gmmset.predict_this(feat,label)  #在Target User Model下的得分
+        others_scores=self.gmmothersset.predict_this(feat,label) #在Others User Model下的得分
+
+        #不考虑分帧时，仅将特征作为一个整体考虑
+        # if target_score>others_score:
+        #     return True
+        # else:
+        #     return False
+
+        #考虑分帧
+        LLR=0
+        for i in range(len(feat)):
+            LL_user=target_scores[i]
+            LL_other=others_scores[i]
+            LLR+=math.log(LL_user/LL_other)
+        LLR=LLR/len(feat)
+
+        if LLR>1:
+            return True
+        else:
+            return False
+
+
+
 
     def save(self, fname):
         '''
@@ -134,7 +260,11 @@ class GMMModel:
         # 使用pickle模块
         with open(fname, 'wb') as f:  # 写入模型
             pickle.dump(self, f, -1)
-        # 使用
+
+        # # 使用joblib
+        # with open(fname, 'wb') as f:  # 写入模型
+        #     pickle.dump(self, f)
+
 
     def load(fname):
         '''
@@ -142,6 +272,16 @@ class GMMModel:
         fname:文件名
         :return:返回模型
         '''
+        #使用pickle
         with open(fname, 'rb') as f:  # 以只读方式打开文件
             M = pickle.load(f)  # 加载之前保存的模型
             return M
+
+        # #使用joblib
+        # with open(fname, 'rb') as f:  # 以只读方式打开文件
+        #     M = pickle.load(f)  # 加载之前保存的模型
+        #     return M
+
+
+
+

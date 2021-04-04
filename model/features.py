@@ -7,9 +7,18 @@ from python_speech_features import mfcc, delta, base
 ###########################################################
 import scipy.io.wavfile
 import scipy
+
 from spafe.utils import vis
 import spafe.features.mfcc as spfm
 from spafe.features.gfcc import gfcc
+from spafe.features.rplp import plp
+from spafe.features.bfcc import bfcc
+from spafe.features.lfcc import lfcc
+from spafe.features.lpc import lpcc
+from spafe.features.msrcc import msrcc
+from spafe.features.ngcc import ngcc
+from spafe.features.pncc import pncc
+from spafe.features.psrcc import psrcc
 
 
 # 音频文件特征提取【MFCC】
@@ -99,6 +108,8 @@ def GFCC(y, sr):
     return gfcc_feature
 
 
+
+
 # 音频文件特征提取【plp】
 def PLP(y, sr):
     '''
@@ -107,7 +118,168 @@ def PLP(y, sr):
     :param sr: 输入音频采样率
     :return: PLP特征向量
     '''
-    pass
+    #函数原型
+    #spafe.features.rplp.plp(sig, fs, num_ceps=13, pre_emph=0,
+    # pre_emph_coeff=0.97, win_len=0.025, win_hop=0.01,
+    # modelorder=13, normalize=0）
+    plp_feature = plp(y, sr)
+
+    if len(plp_feature) == 0:
+        print >> sys.stderr, "ERROR.. failed to extract mfcc feature:", len(y)
+
+    return plp_feature
+
+
+
+def BFCC(y,sr):
+    #spafe.features.bfcc.bfcc(sig, fs=16000, num_ceps=13,pre_emph=0,
+    # pre_emph_coeff=0.97,win_len=0.025,  win_hop=0.01,win_type='hamming',
+    # nfilts=26, nfft=512, low_freq=None, high_freq=None, scale='constant',dct_type=2, use_energy=False, lifter=22, normalize=1
+    bfcc_feature = bfcc(y, sr)
+
+    if len(bfcc_feature) == 0:
+        print >> sys.stderr, "ERROR.. failed to extract mfcc feature:", len(y)
+
+    return bfcc_feature
+
+
+def LFCC(y,sr):
+    #spafe.features.lfcc.lfcc(sig, fs=16000, num_ceps=13, pre_emph=0,
+    # pre_emph_coeff=0.97, win_len=0.025, win_hop=0.01, win_type='hamming',
+    # nfilts=26, nfft=512, low_freq=None, high_freq=None, scale='constant', dct_type=2,
+    # use_energy=False, lifter=22, normalize=1)
+
+    lfcc_feature = lfcc(y, sr)
+
+    if len(lfcc_feature) == 0:
+        print >> sys.stderr, "ERROR.. failed to extract mfcc feature:", len(y)
+
+    return lfcc_feature
+
+
+def LPCC(y,sr):
+  #  spafe.features.lpc.lpcc(sig, fs=16000, num_ceps=13, pre_emph=1,
+  #  pre_emph_coeff=0.97, win_type='hann', win_len=0.025,
+#  win_hop=0.01, do_rasta=True, lifter=1, normalize=1, dither=1)
+    lpcc_feature = lpcc(y, sr)
+
+    if len(lpcc_feature) == 0:
+        print >> sys.stderr, "ERROR.. failed to extract mfcc feature:", len(y)
+
+    return lpcc_feature
+
+
+
+def MSRCC(y,sr):
+    #spafe.features.msrcc.msrcc(sig, fs=16000, num_ceps=13, pre_emph=0,
+# pre_emph_coeff=0.97, win_len=0.025, win_hop=0.01, win_type='hamming',
+# nfilts=26, nfft=512, low_freq=None, high_freq=None, scale='constant',
+# gamma=-0.14285714285714285, dct_type=2, use_energy=False, lifter=22, normalize=1)
+    msrcc_feature = msrcc(y, sr)
+
+    if len(msrcc_feature) == 0:
+        print >> sys.stderr, "ERROR.. failed to extract mfcc feature:", len(y)
+
+    return msrcc_feature
+
+
+def NGCC(y,sr):
+    #spafe.features.ngcc.ngcc(sig, fs=16000, num_ceps=13, pre_emph=0,
+# pre_emph_coeff=0.97, win_len=0.025, win_hop=0.01, win_type='hamming',
+# nfilts=26, nfft=512, low_freq=None, high_freq=None, scale='constant',
+# dct_type=2, use_energy=False, lifter=22, normalize=1)
+    ngcc_feature = ngcc(y, sr)
+
+    if len(ngcc_feature) == 0:
+        print >> sys.stderr, "ERROR.. failed to extract mfcc feature:", len(y)
+
+    return ngcc_feature
+
+
+def PNCC(y,sr):
+    #spafe.features.pncc.pncc(sig, fs=16000, num_ceps=13, pre_emph=0,
+# pre_emph_coeff=0.97, power=2, win_len=0.025, win_hop=0.01, win_type='hamming',
+# nfilts=26, nfft=512, low_freq=None, high_freq=None, scale='constant', dct_type=2,
+# use_energy=False, dither=1, lifter=22, normalize=1)
+    pncc_feature = pncc(y, sr)
+
+    if len(pncc_feature) == 0:
+        print >> sys.stderr, "ERROR.. failed to extract mfcc feature:", len(y)
+
+    return pncc_feature
+
+
+def PSRCC(y,sr):
+#spafe.features.psrcc.psrcc(sig, fs=16000, num_ceps=13, pre_emph=0,
+# pre_emph_coeff=0.97, win_len=0.025, win_hop=0.01, win_type='hamming',
+# nfilts=26, nfft=512, low_freq=None, high_freq=None, scale='constant',
+# gamma=-0.14285714285714285, dct_type=2, use_energy=False,
+# lifter=22, normalize=1)
+    psrcc_feature = psrcc(y, sr)
+
+    if len(psrcc_feature) == 0:
+        print >> sys.stderr, "ERROR.. failed to extract mfcc feature:", len(y)
+
+    return psrcc_feature
+
+
+def ShowAll(y,sr):
+    print('python_speech_features mfcc特征')
+    mfccs = MFCC(y, sr)
+    print(mfccs)
+    print(mfccs.shape)
+
+    print('spafe mfcc特征')
+    mfccs2 = MFCC2(y, sr)
+    print(mfccs2)
+    print(mfccs2.shape)
+
+    print('spafe gfcc特征')
+    gfccs = GFCC(y, sr)
+    print(gfccs)
+    print(gfccs.shape)
+
+    print('spafe plp特征')
+    plps = PLP(y, sr)
+    print(plps)
+    print(plps.shape)
+
+    print('spafe bfcc特征')
+    bfccs = BFCC(y, sr)
+    print(bfccs)
+    print(bfccs.shape)
+
+    print('spafe lfcc特征')
+    lfccs = LFCC(y, sr)
+    print(lfccs)
+    print(lfccs.shape)
+
+    print('spafe lpcc特征')
+    lpccs = LPCC(y, sr)
+    print(lpccs)
+    print(lpccs.shape)
+
+    #MSRCC特征运行起来会报错
+    # print('spafe msrcc特征')
+    # msrccs = MSRCC(y, sr)
+    # print(msrccs)
+    # print(msrccs.shape)
+
+    print('spafe ngcc特征')
+    ngccs = NGCC(y, sr)
+    print(ngccs)
+    print(ngccs.shape)
+
+    print('spafe pncc特征')
+    pnccs = PNCC(y, sr)
+    print(pnccs)
+    print(pnccs.shape)
+
+    #PSRCC特征运行起来会报错
+    # print('spafe psrcc特征')
+    # psrccs = PSRCC(y, sr)
+    # print(psrccs)
+    # print(psrccs.shape)
 
 
 if __name__ == "__main__":
@@ -137,18 +309,6 @@ if __name__ == "__main__":
     # print(fs)
     # print("-------------------")
     # print(sig)
-    print('python_speech_features mfcc特征')
-    mfccs=MFCC(y,sr)
-    print(mfccs)
-    print(mfccs.shape)
+    ShowAll(y,sr)
 
-    print('spafe mfcc特征')
-    mfccs2 = MFCC2(y, sr)
-    print(mfccs2)
-    print(mfccs2.shape)
 
-    print('spafe gfcc特征')
-    gfccs  = GFCC(y,sr)
-    print(gfccs)
-    print(gfccs.shape)
-    #vis.visualize(gfccs, 'LMFCC Coefficient Index', 'Frame Index')
