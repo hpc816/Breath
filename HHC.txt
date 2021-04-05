@@ -525,6 +525,300 @@ Predict accuracy： 0.75 Verification accuracy: 1.0
 
 直接比较总结：都很好 差别不大
 
+4/5
+GFCC的一阶微分与二阶微分部分
+在feature部分添加计算 然后还需要进行竖向的矩阵拼接以保证其横向的维度
+gfcc_feature = gfcc(y, sr, num_ceps=32, nfilts=40)
+d_gfcc_feature = delta(gfcc_feature, 1)
+d2_gfcc_feature = delta(d_gfcc_feature, 1)
+gfcc_feature_all = np.vstack((gfcc_feature, d_gfcc_feature, d2_gfcc_feature))
+
+尝试训练 再观察超参数使用情况：
+
+逐帧比较：
+5：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.008766634182498017, -0.008458167229126744, 0.00027207859748389947]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证失败
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.01419283120894488, -0.00988717718755828, -0.011728446990733768]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> yfk ,score-> 0.334 all scores(without softmax)-> [-0.009076640168019885, -0.005716853072429561, -0.0055265377376732625]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> hpc ,score-> 0.339 all scores(without softmax)-> [-0.041153617864460014, 0.006153656831662208, 0.0013372408364006275]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证失败
+Predict accuracy： 0.5 Verification accuracy: 0.5
+
+10：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.008632838746340047, -0.004839213885578926, 0.00020386817405048673]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证失败
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.013833774351692437, -0.007826567531500229, -0.010680105884482455]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.008856986390934352, -0.0043392824872856275, -0.004966079822346925]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> hpc ,score-> 0.342 all scores(without softmax)-> [-0.03956252538736076, 0.019200923876539665, 0.003153148081960855]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证失败
+Predict accuracy： 0.75 Verification accuracy: 0.5
+
+15：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.009211326241091066, -0.004392093059464503, -0.00024829978909158065]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证失败
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.013822761057298783, -0.007409462048090909, -0.010447650626994442]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.00881084761480644, -0.004020703406357068, -0.004701065601067061]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> hpc ,score-> 0.342 all scores(without softmax)-> [-0.04094488918636435, 0.019447681752604952, 0.003567811766494217]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证失败
+Predict accuracy： 0.75 Verification accuracy: 0.5
+
+20：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.009216006775228358, -0.00485643923460901, -4.573747601843816e-05]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证失败
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.01380088066688077, -0.007035593141192364, -0.010459966829544037]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.0088207366689376, -0.0037620832326071534, -0.004557155864443555]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> hpc ,score-> 0.339 all scores(without softmax)-> [-0.041139989415646276, 0.007217656017182513, 0.005171420701584795]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证失败
+Predict accuracy： 0.75 Verification accuracy: 0.5
+
+25：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.00971614795857058, -0.004800462873610951, -0.0005581581570450868]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.335 all scores(without softmax)-> [-0.014193093735418716, -0.006813003580627577, -0.010164172070685429]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.00910832845807648, -0.0036406922062622504, -0.004363257597939253]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> yfk ,score-> 0.339 all scores(without softmax)-> [-0.03829553310690134, 0.007853586342953075, 0.008285498530424738]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证失败
+Predict accuracy： 1.0 Verification accuracy: 0.75
+
+30：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.009846454735010866, -0.00427274526608905, -0.0005674197163472346]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.335 all scores(without softmax)-> [-0.014271794254222779, -0.006597894549561923, -0.010167819075054133]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.009232951081648877, -0.003384610890711602, -0.004407802095950682]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> hpc ,score-> 0.342 all scores(without softmax)-> [-0.040642070541959584, 0.02151330318766833, 0.006222882221692394]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证失败
+Predict accuracy： 0.75 Verification accuracy: 0.75
+
+
+逐帧比较总结：
+25最好 但是都没有完全正确的验证
+
+相邻帧比较：
+5：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.008766360546881609, -0.00849488151801762, 0.0019875304386252363]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证失败
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.014193466456224978, -0.009892453835424161, -0.01156150419117204]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.009077214968344606, -0.005714165072789808, -0.005737290604294677]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> hpc ,score-> 0.339 all scores(without softmax)-> [-0.04115243813163428, 0.006081482103760027, 0.0008332570076195856]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证失败
+Predict accuracy： 0.75 Verification accuracy: 0.5
+
+10：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.008884678911406626, -0.0060800701657760725, -0.0003134956603046839]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证失败
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.014239930936483323, -0.007922092172949459, -0.011103360857994503]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.009108244224133274, -0.004427662351458514, -0.004945026269851266]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> hpc ,score-> 0.342 all scores(without softmax)-> [-0.04178233360928116, 0.0190717623389704, 0.005285718007124055]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证失败
+Predict accuracy： 0.75 Verification accuracy: 0.5
+
+15：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.009489871528459272, -0.006229056469297932, -0.0002715430519570008]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证失败
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.014223301911245219, -0.007381601064428839, -0.01048833347362662]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.009110395068646679, -0.004032889883620049, -0.004650891927580406]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> hpc ,score-> 0.34 all scores(without softmax)-> [-0.0249116367161259, 0.01937469111896844, 0.005531872806696865]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证失败
+Predict accuracy： 0.75 Verification accuracy: 0.5
+
+20：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.00951015640081125, -0.005369074942478083, -0.0007869568178336721]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证失败
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.01396596287122313, -0.007070329524309063, -0.010337901822778708]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.008892485618253577, -0.0036977705171299625, -0.004520980085839926]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> hpc ,score-> 0.34 all scores(without softmax)-> [-0.023548160945185404, 0.02047426387717717, 0.0056946669820591425]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证失败
+Predict accuracy： 0.75 Verification accuracy: 0.5
+
+25：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.009729308096580264, -0.004009568050871275, -0.0006370708380886224]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.335 all scores(without softmax)-> [-0.01420133776828573, -0.006766430788970531, -0.010288628409111097]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.009174929477520523, -0.0035697177676596355, -0.004459136327608354]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> yfk ,score-> 0.338 all scores(without softmax)-> [-0.03846331030396201, 0.006892711896204821, 0.0074989073999071594]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证失败
+Predict accuracy： 1.0 Verification accuracy: 0.75
+
+30：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.009741342560314404, -0.0045003463132764435, -0.00042630408597925585]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.335 all scores(without softmax)-> [-0.014268411858683019, -0.006670232163618371, -0.010118418937272269]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.009257485766070514, -0.0034992417938225877, -0.004365736367678398]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> hpc ,score-> 0.339 all scores(without softmax)-> [-0.03967936976956893, 0.009438913055415013, 0.009151540271184528]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证失败
+Predict accuracy： 0.75 Verification accuracy: 0.75
+
+
+相邻帧比较总结：
+25最好 但没有都为1
+
+直接比较：
+5：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.008580278095168464, -0.008231454842875022, 0.0017482917477588606]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.014764578463248175, -0.00988472422774853, -0.011487722839861983]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> yfk ,score-> 0.334 all scores(without softmax)-> [-0.009423849169476157, -0.005691896519601461, -0.005642050944030144]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> hpc ,score-> 0.34 all scores(without softmax)-> [-0.04761159431485007, 0.006137175236037503, 0.0006656917007881512]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证通过
+Predict accuracy： 0.5 Verification accuracy: 1.0
+
+10：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.008881724223889666, -0.005523967216457729, 3.9114259193897246e-05]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.014214580818360056, -0.0089394033052669, -0.010982617776503209]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> yfk ,score-> 0.334 all scores(without softmax)-> [-0.009073359822345532, -0.005007756667607933, -0.0049274929367717855]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> hpc ,score-> 0.339 all scores(without softmax)-> [-0.041896652104497244, 0.006360427337989884, 0.005096797909424638]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证通过
+Predict accuracy： 0.5 Verification accuracy: 1.0
+
+15：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.009116757510305194, -0.005746140586049159, -0.00029365812415415454]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.014059191171007476, -0.007371535399989367, -0.010531212577183292]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.00908237636583184, -0.003983282864339052, -0.004694689777253324]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> hpc ,score-> 0.342 all scores(without softmax)-> [-0.04253836854468076, 0.019905089118925884, 0.004275198572365726]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证通过
+Predict accuracy： 0.75 Verification accuracy: 1.0
+
+20：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.009752684426883521, -0.00476561531439874, -0.0007609541293737494]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.01415698765319448, -0.007053113131567852, -0.01038497789804721]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.009121323468037257, -0.003738835465653122, -0.00461967156197067]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> hpc ,score-> 0.341 all scores(without softmax)-> [-0.03783240860200301, 0.020522840438528714, 0.006023572804542824]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证通过
+Predict accuracy： 0.75 Verification accuracy: 1.0
+
+25：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.009728631320184014, -0.0037615514471847976, -0.0001590609102879897]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.335 all scores(without softmax)-> [-0.014239158782629406, -0.006777877172128449, -0.010229977656356097]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.009198573939810769, -0.003444132904083259, -0.004448819775178844]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> hpc ,score-> 0.342 all scores(without softmax)-> [-0.03952326609584784, 0.021419565634095878, 0.006007498682370269]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证通过
+Predict accuracy： 0.75 Verification accuracy: 1.0
+
+30：
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> hhc ,score-> 0.336 all scores(without softmax)-> [0.00995874089580958, -0.004861305532056141, -0.00018226342681901289]
+D:\Github_Desktop\BreathPrint\data\test/hhc/normal1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> hpc ,score-> 0.335 all scores(without softmax)-> [-0.014152181210770122, -0.006627833410626063, -0.010160091260188471]
+D:\Github_Desktop\BreathPrint\data\test/hpc/正常呼吸2.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> hpc ,score-> 0.334 all scores(without softmax)-> [-0.009140505801134353, -0.0034816137552073135, -0.004332323632377606]
+D:\Github_Desktop\BreathPrint\data\test/hpc/深呼吸1.wav -> 验证通过
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> yfk ,score-> 0.339 all scores(without softmax)-> [-0.04129881801332012, 0.007864804511604952, 0.00935629667459221]
+D:\Github_Desktop\BreathPrint\data\test/yfk/1.wav -> 验证通过
+Predict accuracy： 1.0 Verification accuracy: 1.0
+
+
+直接比较总结：
+30最好
+
 
 
 
