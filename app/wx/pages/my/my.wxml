@@ -1,0 +1,118 @@
+<view>
+  <view class="top">
+    <view class="center">
+      <view class="center_top">
+        <view class="center_img" bindtap="toBaseInfo">
+          <!-- <image src="../../static/info_img.jpg"></image> -->
+          <open-data type="userAvatarUrl" class="user_head"></open-data>
+        </view>
+        <view class="center_info" bindtap="toBaseInfo">
+          <view class="center_name">{{trueName}}</view>
+          <!-- <view class="center_phone">phone:{{phone}}</view> -->
+          <view class="center_phone">基本信息</view>
+        </view>
+      </view>
+      <view class="center_down">
+        <view class="center_rank" bindtap="toNone">
+          <image class="rank_icon" src="../../icons/infor1.png"></image>
+          <text class="rank_text">个人信息</text>
+        </view>
+        <view class="center_score" bindtap="toNone">
+          <image class="rank_icon" src="../../icons/shoucang2.png"></image>
+          <text class="rank_text">我的收藏</text>
+        </view>
+      </view>
+    </view>
+    <image src='http://docfile.funkingka.cn/FqzmiFqvXbHg-cfbquNRlawHUgHt' mode='scaleToFill' class='gif-wave'></image>
+  </view>
+</view>
+<!-- 
+<view class="usr_content">
+  <view class="usr_main">
+    <view class="breath">
+      <navigator>
+        <view class="breathpic">
+          0
+        </view>
+        <view class="breathtitle">
+          呼吸录入
+        </view>
+      </navigator>
+
+      <navigator>
+        <view class="breathpic">
+          0 -->
+          <!-- <image src='../../icons/breathpic.png' /> -->
+        <!-- </view>
+        <view class="breathtitle">
+          呼吸录入
+        </view>
+      </navigator>
+
+      <navigator>
+        <view class="breathpic">
+          0
+        </view>
+        <view class="breathtitle">
+          呼吸录入
+        </view>
+      </navigator>
+    </view>
+  </view>
+</view> -->
+
+
+<view class="usr_tools">
+
+    <view class="item">
+      <navigator url='../register/register'>
+        <view><image src='../../icons/ident.png' class="breathpic"></image>
+          </view>
+        <view>
+          声纹识别
+        </view>
+      </navigator>
+    </view>
+
+    <view class="item">
+      <navigator>
+        <view><image src='../../icons/caiji.png' class="breathpic"></image>
+        </view>
+      <view>
+        重新采集
+      </view>
+      </navigator>
+    </view>
+
+    <view class="item">
+      <navigator>
+        <view><image src='../../icons/gongneng.png' class="breathpic"></image>
+        </view>
+      <view>
+        功能页面
+      </view>
+      </navigator>
+    </view>
+
+</view>
+
+<view class="myinfor">
+  <navigator url='../picture/picture'>
+    <view class="infor_item">
+      <image src='../../icons/photo.png'></image>
+      <view><text decode='{{true}}'> 相&nbsp;&nbsp;&nbsp;册</text></view>
+      <image src="../../icons/jiantou.png" class="jiantou"></image>
+    </view>
+  </navigator>
+  
+  <view class="infor_item">
+    <image src='../../icons/beiwang.png'></image>
+    <view>备忘录</view>
+    <image src="../../icons/jiantou.png" class="jiantou"></image>
+  </view>
+  <view class="infor_item">
+    <image src='../../icons/NFC.png'></image>
+    <view>NFC卡</view>
+    <image src="../../icons/jiantou.png" class="jiantou"></image>
+  </view>
+</view>

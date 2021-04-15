@@ -2,6 +2,301 @@
 
 #### TODO-LIST
 
+- 提纯问题：提纯之后可能会有维度对齐的问题，需要进行调整
+  - 
+
+
+
+
+
+#### 模型测试
+
+##### GMM
+
+- normal:
+
+  - gmm_model, gmmorder=5,
+
+    -  GMM_type1, 32维gfcc: ![image-20210408212139134](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210408212139134.png)
+
+    - GMM_type1,96维gfcc:![image-20210408215157044](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210408215157044.png)
+
+    - GMM_type1,13维mfcc:![image-20210408215325028](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210408215325028.png)
+
+    - GMM_type2,32维gfcc:![image-20210409103236716](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409103236716.png)
+
+      ![image-20210409152930902](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409152930902.png)
+
+    - GMM_type2,96维gfcc:![image-20210409103414191](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409103414191.png)
+
+    - GMM_type2,13维mfcc：![image-20210409102625950](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409102625950.png)
+
+    - GMM_type3,32维gfcc:![image-20210409103549503](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409103549503.png)
+
+    - GMM_type3,96维gfcc:![image-20210409103719302](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409103719302.png)
+
+    - GMM_type3,13维mfcc:![image-20210409103835722](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409103835722.png)
+
+    - GMM_type4,32维gfcc:![image-20210409104727189](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409104727189.png)
+
+    - GMM_type4,96维gfcc:![image-20210409104905469](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409104905469.png)
+
+    - GMM_type4,13维mfcc:![image-20210409104554414](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409104554414.png)
+
+  - gmm_model , gmmorder=10:
+
+    - GMM_type1,32维gfcc:![image-20210409105224812](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409105224812.png)
+    - GMM_type1,96维gfcc:![image-20210409105407756](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409105407756.png)
+    - GMM_type1,13维mfcc![image-20210409105619696](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409105619696.png)
+    - GMM_type2,32维gfcc:![image-20210409105802130](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409105802130.png)
+    - GMM_type2,96维gfcc:![image-20210409110024185](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409110024185.png)
+    - GMM_type2,13维mfcc![image-20210409110225843](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409110225843.png)
+    - GMM_type3,32维gfcc:![image-20210409110418805](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409110418805.png)
+    - GMM_type3,96维gfcc:![image-20210409110552261](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409110552261.png)
+    - GMM_type3,13维mfcc:![image-20210409110720106](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409110720106.png)
+    - GMM_type4,32维gfcc:![image-20210409110914816](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409110914816.png)
+    - GMM_type4,96维gfcc:![image-20210409111110301](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409111110301.png)
+    - GMM_type4,13维mfcc:![image-20210409111313323](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409111313323.png)
+
+  - gmm_model, gmmorder=15:
+
+    - GMM_type1,32维gfcc:![image-20210409111509907](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409111509907.png)
+    - GMM_type1,96维gfcc:![image-20210409111721774](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409111721774.png)
+    - GMM_type1,13维mfcc![image-20210409111914952](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409111914952.png)
+    - GMM_type2,32维gfcc:![image-20210409112119217](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409112119217.png)
+    - GMM_type2,96维gfcc:![image-20210409112331634](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409112331634.png)
+    - GMM_type2,13维mfcc![image-20210409112527865](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409112527865.png)
+    - GMM_type3,32维gfcc:![image-20210409112819783](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409112819783.png)
+    - GMM_type3,96维gfcc:![image-20210409113035576](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409113035576.png)
+    - GMM_type3,13维mfcc:![image-20210409113307929](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409113307929.png)
+    - GMM_type4,32维gfcc:![image-20210409113502352](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409113502352.png)
+    - GMM_type4,96维gfcc:![image-20210409113649400](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409113649400.png)
+    - GMM_type4,13维mfcc:![image-20210409113820757](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409113820757.png)
+
+  - gmm_model, gmmorder=20:
+
+    - GMM_type1,32维gfcc:![image-20210409125353380](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409125353380.png)
+
+      
+
+    - GMM_type1,96维gfcc:![image-20210409125540705](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409125540705.png)
+
+    - GMM_type1,13维mfcc![image-20210409125721663](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409125721663.png)
+
+    - GMM_type2,32维gfcc:![image-20210409125849177](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409125849177.png)
+
+    - GMM_type2,96维gfcc:![image-20210409130903697](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409130903697.png)
+
+    - GMM_type2,13维mfcc![image-20210409131256313](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409131256313.png)
+
+    - GMM_type3,32维gfcc:![image-20210409130014985](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409130014985.png)
+
+    - GMM_type3,96维gfcc:![image-20210409130613036](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409130613036.png)
+
+    - GMM_type3,13维mfcc:![image-20210409131443230](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409131443230.png)
+
+    - GMM_type4,32维gfcc:![image-20210409130203116](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409130203116.png)
+
+    - GMM_type4,96维gfcc:![image-20210409130359984](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409130359984.png)
+
+    - GMM_type4,13维mfcc:![image-20210409131711312](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409131711312.png)
+
+  - gmm_model, gmmorder=25:
+
+    - GMM_type1,32维gfcc:![image-20210409134122390](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409134122390.png)
+    - GMM_type1,96维gfcc:![image-20210409132905272](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409132905272.png)
+    - GMM_type1,13维mfcc![image-20210409132659946](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409132659946.png)
+    - GMM_type2,32维gfcc:![image-20210409134019020](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409134019020.png)
+    - GMM_type2,96维gfcc:![image-20210409133140388](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409133140388.png)
+    - GMM_type2,13维mfcc![image-20210409132414113](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409132414113.png)
+    - GMM_type3,32维gfcc:![image-20210409133759263](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409133759263.png)
+    - GMM_type3,96维gfcc:![image-20210409133259497](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409133259497.png)
+    - GMM_type3,13维mfcc:![image-20210409132151427](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409132151427.png)
+    - GMM_type4,32维gfcc:![image-20210409133649968](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409133649968.png)
+    - GMM_type4,96维gfcc:![image-20210409133428701](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409133428701.png)
+    - GMM_type4,13维mfcc:![image-20210409132007609](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409132007609.png)
+
+  - gmm_model, gmmorder=30:
+
+    - GMM_type1,32维gfcc:![image-20210409134433291](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409134433291.png)
+    - GMM_type1,96维gfcc:![image-20210409151831219](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409151831219.png)
+    - GMM_type1,13维mfcc![image-20210409151940615](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409151940615.png)
+    - GMM_type2,32维gfcc:![image-20210409134541982](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409134541982.png)
+    - GMM_type2,96维gfcc:![image-20210409151647970](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409151647970.png)
+    - GMM_type2,13维mfcc![image-20210409152046400](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409152046400.png)
+    - GMM_type3,32维gfcc:![image-20210409150658225](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409150658225.png)
+    - GMM_type3,96维gfcc:![image-20210409151458582](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409151458582.png)
+    - GMM_type3,13维mfcc:![image-20210409152238643](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409152238643.png)
+    - GMM_type4,32维gfcc:![image-20210409151001537](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409151001537.png)
+    - GMM_type4,96维gfcc:![image-20210409151330573](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409151330573.png)
+    - GMM_type4,13维mfcc:![image-20210409152400589](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210409152400589.png)
+
+- deep:
+
+  - gmm_model, gmmorder=5
+    - GMM_type1,32维gfcc:
+    - GMM_type1,96维gfcc:
+    - GMM_type1,13维mfcc
+    - GMM_type2,32维gfcc:
+    - GMM_type2,96维gfcc:
+    - GMM_type2,13维mfcc
+    - GMM_type3,32维gfcc:
+    - GMM_type3,96维gfcc:
+    - GMM_type3,13维mfcc:
+    - GMM_type4,32维gfcc:
+    - GMM_type4,96维gfcc:
+    - GMM_type4,13维mfcc:
+  - gmm_model , gmmorder=10:
+    - GMM_type1,32维gfcc:
+    - GMM_type1,96维gfcc:
+    - GMM_type1,13维mfcc
+    - GMM_type2,32维gfcc:
+    - GMM_type2,96维gfcc:
+    - GMM_type2,13维mfcc
+    - GMM_type3,32维gfcc:
+    - GMM_type3,96维gfcc:
+    - GMM_type3,13维mfcc:
+    - GMM_type4,32维gfcc:
+    - GMM_type4,96维gfcc:
+    - GMM_type4,13维mfcc:
+  - gmm_model, gmmorder=15:
+    - GMM_type1,32维gfcc:
+    - GMM_type1,96维gfcc:
+    - GMM_type1,13维mfcc
+    - GMM_type2,32维gfcc:
+    - GMM_type2,96维gfcc:
+    - GMM_type2,13维mfcc
+    - GMM_type3,32维gfcc:
+    - GMM_type3,96维gfcc:
+    - GMM_type3,13维mfcc:
+    - GMM_type4,32维gfcc:
+    - GMM_type4,96维gfcc:
+    - GMM_type4,13维mfcc:
+  - gmm_model, gmmorder=20:
+    - GMM_type1,32维gfcc:
+    - GMM_type1,96维gfcc:
+    - GMM_type1,13维mfcc
+    - GMM_type2,32维gfcc:
+    - GMM_type2,96维gfcc:
+    - GMM_type2,13维mfcc
+    - GMM_type3,32维gfcc:
+    - GMM_type3,96维gfcc:
+    - GMM_type3,13维mfcc:
+    - GMM_type4,32维gfcc:
+    - GMM_type4,96维gfcc:
+    - GMM_type4,13维mfcc:
+  - gmm_model, gmmorder=25:
+    - GMM_type1,32维gfcc:
+    - GMM_type1,96维gfcc:
+    - GMM_type1,13维mfcc
+    - GMM_type2,32维gfcc:
+    - GMM_type2,96维gfcc:
+    - GMM_type2,13维mfcc
+    - GMM_type3,32维gfcc:
+    - GMM_type3,96维gfcc:
+    - GMM_type3,13维mfcc:
+    - GMM_type4,32维gfcc:
+    - GMM_type4,96维gfcc:
+    - GMM_type4,13维mfcc:
+  - gmm_model, gmmorder=30:
+    - GMM_type1,32维gfcc:
+    - GMM_type1,96维gfcc:
+    - GMM_type1,13维mfcc
+    - GMM_type2,32维gfcc:
+    - GMM_type2,96维gfcc:
+    - GMM_type2,13维mfcc
+    - GMM_type3,32维gfcc:
+    - GMM_type3,96维gfcc:
+    - GMM_type3,13维mfcc:
+    - GMM_type4,32维gfcc:
+    - GMM_type4,96维gfcc:
+    - GMM_type4,13维mfcc:
+
+- sniff:
+
+  - gmm_model, gmmorder=5
+    - GMM_type1,32维gfcc:
+    - GMM_type1,96维gfcc:
+    - GMM_type1,13维mfcc
+    - GMM_type2,32维gfcc:
+    - GMM_type2,96维gfcc:
+    - GMM_type2,13维mfcc
+    - GMM_type3,32维gfcc:
+    - GMM_type3,96维gfcc:
+    - GMM_type3,13维mfcc:
+    - GMM_type4,32维gfcc:
+    - GMM_type4,96维gfcc:
+    - GMM_type4,13维mfcc:
+  - gmm_model , gmmorder=10:
+    - GMM_type1,32维gfcc:
+    - GMM_type1,96维gfcc:
+    - GMM_type1,13维mfcc
+    - GMM_type2,32维gfcc:
+    - GMM_type2,96维gfcc:
+    - GMM_type2,13维mfcc
+    - GMM_type3,32维gfcc:
+    - GMM_type3,96维gfcc:
+    - GMM_type3,13维mfcc:
+    - GMM_type4,32维gfcc:
+    - GMM_type4,96维gfcc:
+    - GMM_type4,13维mfcc:
+  - gmm_model, gmmorder=15:
+    - GMM_type1,32维gfcc:
+    - GMM_type1,96维gfcc:
+    - GMM_type1,13维mfcc
+    - GMM_type2,32维gfcc:
+    - GMM_type2,96维gfcc:
+    - GMM_type2,13维mfcc
+    - GMM_type3,32维gfcc:
+    - GMM_type3,96维gfcc:
+    - GMM_type3,13维mfcc:
+    - GMM_type4,32维gfcc:
+    - GMM_type4,96维gfcc:
+    - GMM_type4,13维mfcc:
+  - gmm_model, gmmorder=20:
+    - GMM_type1,32维gfcc:
+    - GMM_type1,96维gfcc:
+    - GMM_type1,13维mfcc
+    - GMM_type2,32维gfcc:
+    - GMM_type2,96维gfcc:
+    - GMM_type2,13维mfcc
+    - GMM_type3,32维gfcc:
+    - GMM_type3,96维gfcc:
+    - GMM_type3,13维mfcc:
+    - GMM_type4,32维gfcc:
+    - GMM_type4,96维gfcc:
+    - GMM_type4,13维mfcc:
+  - gmm_model, gmmorder=25:
+    - GMM_type1,32维gfcc:
+    - GMM_type1,96维gfcc:
+    - GMM_type1,13维mfcc
+    - GMM_type2,32维gfcc:
+    - GMM_type2,96维gfcc:
+    - GMM_type2,13维mfcc
+    - GMM_type3,32维gfcc:
+    - GMM_type3,96维gfcc:
+    - GMM_type3,13维mfcc:
+    - GMM_type4,32维gfcc:
+    - GMM_type4,96维gfcc:
+    - GMM_type4,13维mfcc:
+  - gmm_model, gmmorder=30:
+    - GMM_type1,32维gfcc:
+    - GMM_type1,96维gfcc:
+    - GMM_type1,13维mfcc
+    - GMM_type2,32维gfcc:
+    - GMM_type2,96维gfcc:
+    - GMM_type2,13维mfcc
+    - GMM_type3,32维gfcc:
+    - GMM_type3,96维gfcc:
+    - GMM_type3,13维mfcc:
+    - GMM_type4,32维gfcc:
+    - GMM_type4,96维gfcc:
+    - GMM_type4,13维mfcc:
+
+  
+
+
+
 - 仓库同步问题：这两项修改不涉及核心代码部分，不要同步到仓库，同步了之后反而会让其他成员需要重新配置pycharm![image-20210404172224095](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210404172224095.png)
 
 
@@ -13,6 +308,10 @@
 
 
 - 2.每次都需要提取特征比较费时间，对内存和CPU消耗也比较大，考虑将音频的特征矩阵提取之后保存
+  - 新增两个函数task_login和task_logout,分别用于保存音频文件特征向量和使用保存的特征向量进行模型训练
+    - 运行结果：成功运行，音频文件特征向量成功保存在了本地，同时使用本地保存的特征向量文件也可以训练出模型![image-20210405115811003](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210405115811003.png)
+      - ![image-20210405120606537](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210405120606537.png)
+      - **预测准确率和验证通过率都是100%，但是可以看到区分度还是不太大**![image-20210405120650156](C:\Users\hpc\AppData\Roaming\Typora\typora-user-images\image-20210405120650156.png)
 
 
 

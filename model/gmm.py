@@ -1,5 +1,7 @@
 # 本模块构建GMM模型
 import pickle
+import sys
+
 import joblib
 
 
@@ -11,20 +13,17 @@ from sklearn.mixture import GaussianMixture  # 导入高斯混合模型包
 import math
 import operator
 
-from model.features import MFCC
-from model.features import MFCC2
-from model.features import GFCC
-from model.features import PLP
+from model.features import extraction
 
 class GMMSet:  # GMM集合，每个GMM代表一个用户【或一种对象】
-    def __init__(self, gmm_order=32):
+    def __init__(self,gmmorder=30):
         '''
         初始化GMM模型【设置一些参数】
-        :param gmm_order:GMM中高斯分布的数量，这里默认设置为13 [需要保证n_samples（MFCC维数） >= n_components]
+        :param gmmorder:GMM中高斯分布的数量，这里默认设置为13 [需要保证n_samples（MFCC维数） >= n_components]
         :param covariance_type: 协方差矩阵样式，默认设置为对角矩阵
         '''
         self.gmms = []  # GMM列表，每个元素是一个高斯混合模型
-        self.gmm_order = gmm_order  # 模型中高斯分布的数量
+        self.gmmorder=gmmorder #高斯分布的数量
         # self.covariance_type=covariance_type  #模型协方差矩阵样式
         self.y = []  # 标签列表【一共有几类，每一类由用户名代表的标签表示】
 
@@ -37,7 +36,7 @@ class GMMSet:  # GMM集合，每个GMM代表一个用户【或一种对象】
         '''
         self.y.append(label)
         # 下面不知道为什么，协方差矩阵用对角矩阵diag型就不行
-        gmm = GaussianMixture(self.gmm_order, covariance_type='diag')  # 初始化一个高斯混合模型类，这里设置高斯分布数量为32，协方差矩阵为对角矩阵
+        gmm = GaussianMixture(self.gmmorder, covariance_type='diag')  # 初始化一个高斯混合模型类，这里设置高斯分布数量为32，协方差矩阵为对角矩阵
         gmm.fit(x)  # 根据输入的特征向量，使用EM算法估算模型参数,返回训练后的模型
         self.gmms.append(gmm)  # 将得到的高斯混合模型加入模型集合
 
@@ -78,26 +77,19 @@ class GMMSet:  # GMM集合，每个GMM代表一个用户【或一种对象】
         softmax_score = self.softmax(scores)  # 映射为0-1之间
         return p[0], softmax_score,scores  # 返回姓名和评分,以及各模型下的得分
 
-    def predict_this(self,x,label):
+
+    def predict_this(self,x,label,veriftype):
         '''
         预测label对应模型下的得分
         :param x: 输入的音频特征向量
         :param label: 标签
+        :param veriftype:验证的类型
+            Gmm_type1:逐帧比较
+            GMM_type2:相邻两帧比较
+            GMM_type3:整段比较
+            GMM_type4:投票表决
         :return: 返回得分列表【能不能实现计算出每一帧的得分？】
         '''
-        # #未逐帧比较,仅计算特征向量整体的得分
-        # scores=[self.gmm_score(gmm,x)/len(x) for gmm in self.gmms]
-        # my_dict={}
-        # for index, value in enumerate(scores):
-        #     my_dict[self.y[index]]=value
-        #
-        # this_score=my_dict[label]
-        #
-        # #返回softmax score
-        # scores_sum = sum([math.exp(i) for i in scores])
-        # score_this = math.exp(this_score)
-        # return round(score_this / (scores_sum), 3)
-
         #找到当前标签对应的用户模型
         for i in range(len(self.y)):
             if self.y[i]==label:
@@ -105,17 +97,38 @@ class GMMSet:  # GMM集合，每个GMM代表一个用户【或一种对象】
 
         gmm=self.gmms[index]
 
-        scores=[]
-        # #逐帧比较，计算每一帧在模型下的得分
-        # for i in x:
-        #     scores.append(math.exp(self.gmm_score(gmm,np.array(i).reshape(1,-1)))) #将分数求e的指数，解决分数可能为负值的情况
 
-        #每次输入两个帧的特征向量
-        for i in range(len(x)):
-            scores.append(math.exp(self.gmm_score(gmm,x[i:i+2]))) #每次验证相邻的两个帧
+        if veriftype=='GMM_type1' or veriftype=='GMM_type4': #逐帧比较 or 投票表决
+            scores = []
+            #逐帧比较，计算每一帧在模型下的得分
+            for i in x:
+                scores.append(math.exp(self.gmm_score(gmm,np.array(i).reshape(1,-1)))) #将分数求e的指数，解决分数可能为负值的情况
 
+            return scores
+        elif veriftype=='GMM_type2': #相邻两帧比较
+            scores = []
+            # 每次输入两个帧的特征向量
+            for i in range(len(x)):
+                scores.append(math.exp(self.gmm_score(gmm, x[i:i + 2])))  # 每次验证相邻的两个帧
 
-        return scores
+            return scores
+        elif veriftype=='GMM_type3': #整体比较
+            #未逐帧比较,仅计算特征向量整体的得分
+            scores=[self.gmm_score(gmm,x)/len(x) for gmm in self.gmms]
+            my_dict={}
+            for index, value in enumerate(scores):
+                my_dict[self.y[index]]=value
+
+            this_score=my_dict[label]
+
+            #返回softmax score
+            scores_sum = sum([math.exp(i) for i in scores])
+            score_this = math.exp(this_score)
+            return round(score_this / (scores_sum), 3)
+        else:
+            print('请输入正确的验证类型:GMM_type1|GMM_type2|GMM_type3 ')
+            sys.exit(1) #强制退出
+
 
 
     def before_pickle(self):  # 使用pickle保存模型之前
@@ -126,14 +139,17 @@ class GMMSet:  # GMM集合，每个GMM代表一个用户【或一种对象】
 
 
 class GMMModel:
-    def __init__(self):
+    def __init__(self,gmmorder):
         '''
+        :param gmm_order:高斯分布数目
         features:特征向量字典，键为用户名，值为特征向量矩阵
         gmmset:GMM模型组
         '''
         self.features = defaultdict(list)  # 当字典的key不存在时，返回的是[],即一个空的列表
-        self.gmmset = GMMSet()  # 获取GMM模型组【每一个用户建立一个模型】
-        self.gmmothersset=GMMSet() #目标用户外的其他用户模型组 【里面每个元素是除了目标用户外的其他用户的特征向量训练出来的】
+        self.gmmorder=gmmorder
+        self.gmmset = GMMSet(gmmorder)  # 获取GMM模型组【每一个用户建立一个模型】
+        self.gmmothersset=GMMSet(gmmorder) #目标用户外的其他用户模型组 【里面每个元素是除了目标用户外的其他用户的特征向量训练出来的】
+
 
     def enroll(self, name, y, sr,featype):
         '''
@@ -143,23 +159,15 @@ class GMMModel:
         :param sr:采样率
         :param featype:特征类型
         '''
-        if featype=='mfcc1':
-            feat = np.array(MFCC(y, sr))  # 提取MFCC特征(使用speech),并转换为np数组
-        elif featype=='mfcc2':
-            feat = np.array(MFCC2(y, sr))  # 提取MFCC特征(使用spafe),并转换为np数组
-        elif featype=='gfcc':
-            feat=np.array(GFCC(y,sr))  #提取GFCC特征(使用spafe),并转换为np数组
-        elif featype=='plp':
-            feat=np.array(PLP(y,sr))
-
+        feat=np.array(extraction(y,sr,featype))
         self.features[name].extend(feat)  # 加入字典
 
     def train(self):
         '''
         模型训练
         '''
-        self.gmmset = GMMSet()  # 实例化一个GMM模型组对象，用于下面的训练过程 【User Model】
-        self.gmmothersset=GMMSet() #【Other Model】
+        self.gmmset = GMMSet(self.gmmorder)  # 实例化一个GMM模型组对象，用于下面的训练过程 【User Model】
+        self.gmmothersset=GMMSet(self.gmmorder) #【Other Model】
         start_time1 = time.time()  # 开始时间  time.time()：返回当前时间的时间戳（1970纪元后经过的浮点秒数）
         # print(type(self.features["hpc"]))
         #训练目标用户模型
@@ -186,7 +194,6 @@ class GMMModel:
 
 
 
-
     def predict(self, y, sr,featype):
         '''
         进行预测
@@ -196,58 +203,69 @@ class GMMModel:
         :return: 预测的标签【用户名/姓名】、评分
         '''
         try:
-            if featype == 'mfcc1':
-                feat = np.array(MFCC(y, sr))  # 提取MFCC特征(使用speech),并转换为np数组
-            elif featype == 'mfcc2':
-                feat = np.array(MFCC2(y, sr))  # 提取MFCC特征(使用spafe),并转换为np数组
-            elif featype == 'gfcc':
-                feat = np.array(GFCC(y, sr))  # 提取GFCC特征(使用spafe),并转换为np数组
+            feat = np.array(extraction(y,sr,featype))
         except Exception as e:
             print(e)
         return self.gmmset.predict_one(feat)
 
 
-    def Verify(self,y,sr,featype,label):
+    def Verify(self,y,sr,label,featype,verifytype):
         '''
         用于实现BreathPrint论文中提到的算法:综合考虑Target User Model和Others User Model
         :param y:输入音频的时间序列
         :param sr:输入音频的采样率
-        :param featype:特征类型
         :param label:输入文件的标签
+        :param featype:特征类型
+        :param verifytype:验证类型
+            Gmm_type1:逐帧比较
+            GMM_type2:相邻帧比较
+            GMM_type3:整段比较
         :return:Verifivcation的结果【true/fasle】、评分
         '''
         #特征提取
         try:
-            if featype == 'mfcc1':
-                feat = np.array(MFCC(y, sr))  # 提取MFCC特征(使用speech),并转换为np数组
-            elif featype == 'mfcc2':
-                feat = np.array(MFCC2(y, sr))  # 提取MFCC特征(使用spafe),并转换为np数组
-            elif featype == 'gfcc':
-                feat = np.array(GFCC(y, sr))  # 提取GFCC特征(使用spafe),并转换为np数组
+            feat = np.array(extraction(y,sr,featype))
         except Exception as e:
             print(e)
 
-        target_scores=self.gmmset.predict_this(feat,label)  #在Target User Model下的得分
-        others_scores=self.gmmothersset.predict_this(feat,label) #在Others User Model下的得分
+        target_scores=self.gmmset.predict_this(feat,label,verifytype)  #在Target User Model下的得分
+        others_scores=self.gmmothersset.predict_this(feat,label,verifytype) #在Others User Model下的得分
 
-        #不考虑分帧时，仅将特征作为一个整体考虑
-        # if target_score>others_score:
-        #     return True
-        # else:
-        #     return False
+        if verifytype=='GMM_type1' or verifytype=='GMM_type2':#逐帧比较 or 相邻两帧比较
+            # 考虑分帧
+            LLR = 0
+            for i in range(len(feat)):
+                LL_user = target_scores[i]
+                LL_other = others_scores[i]
+                LLR += math.log(LL_user / LL_other)
+            LLR = LLR / len(feat)
 
-        #考虑分帧
-        LLR=0
-        for i in range(len(feat)):
-            LL_user=target_scores[i]
-            LL_other=others_scores[i]
-            LLR+=math.log(LL_user/LL_other)
-        LLR=LLR/len(feat)
+            if LLR > 1:
+                return True
+            else:
+                return False
+        elif verifytype=='GMM_type3':#整体比较
+            #不考虑分帧时，仅将特征作为一个整体考虑
+            if target_scores>others_scores:
+                return True
+            else:
+                return False
+        elif verifytype=='GMM_type4': #投票方法，少数服从多数
+            CT_U = 0 #用户模型对应的票数
+            CT_O=0 #其他用户模型对应的票数
+            for i in range(len(feat)):
+                if target_scores[i]>others_scores[i]:
+                    CT_U=CT_U+1 #用户模型票数加一
+                elif target_scores[i]<=others_scores[i]:
+                    CT_O=CT_O+1 #其他用户模型票数加一
 
-        if LLR>1:
-            return True
-        else:
-            return False
+            if CT_U>CT_O:
+                return True
+            else:
+                return False
+
+
+
 
 
 

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "tabBar": "../../components/tabbar/tabbar"
+  },
+  "navigationBarTitleText": "声纹相册"
+}

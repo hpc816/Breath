@@ -1,0 +1,17 @@
+<view class="bxx_index">
+    <!-- 搜索框开始 -->
+    <SearchInput></SearchInput>
+    <!-- 搜索框结束 -->
+
+    <!-- 轮播图开始 -->
+    <view class="index_swiper">
+        <swiper autoplay circular indicator-dots="true">
+            <swiper-item wx:for="{{swiperList}}" wx:key="goods_id">
+                <navigator>
+                    <image src="{{item.image_src}}" mode="widthFix"></image>
+                </navigator>
+            </swiper-item>
+        </swiper>
+    </view>
+    <!-- 轮播图结束 -->
+</view> 

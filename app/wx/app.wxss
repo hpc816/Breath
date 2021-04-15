@@ -1,0 +1,14 @@
+@import "./styles/iconfont.wxss";
+
+page,view,text,swipper,swipper-item,image,navigator{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* 主题颜色 */
+page{
+    /* 定义主题颜色 */
+    --themeColor:#23ebb9;
+    font-size: 28rpx;
+}

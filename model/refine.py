@@ -1,4 +1,6 @@
 # 本模块用于对原始音频文件进行提纯处理
+import time
+
 import numpy as np
 import librosa as li
 import librosa.display as lid
@@ -41,14 +43,17 @@ def refine(y, sr):
 if __name__=="__main__":
     y, sr = li.load(r'C:\Users\hpc\Desktop\Breath\data\normal\hpc\正常呼吸3.wav', sr=None, duration=20)
 
+    start_time=time.time()
     y_n=refine(y,sr)
-    plt.figure()
-    plt.subplot(2,1,1)
-    lid.waveplot(y,sr)
-    plt.title(' wavform')
 
-    plt.subplot(2,1,2)
-    lid.waveplot(y_n,sr)
-    plt.title(' wavform_energy')
-    plt.tight_layout() #保证图不重叠#
-    plt.show()
+    print('refine操作所需时间：',time.time()-start_time)
+    # plt.figure()
+    # plt.subplot(2,1,1)
+    # lid.waveplot(y,sr)
+    # plt.title(' wavform')
+    #
+    # plt.subplot(2,1,2)
+    # lid.waveplot(y_n,sr)
+    # plt.title(' wavform_energy')
+    # plt.tight_layout() #保证图不重叠#
+    # plt.show()

@@ -1,0 +1,66 @@
+{
+  "pages":[
+    "pages/my/my",
+    "pages/user/user",
+    "pages/picture/picture",
+    "pages/photos/add",
+    "pages/photos/photos",
+    "pages/album/add",
+    "pages/register/register",
+    "pages/test3/test3",
+    "pages/category/index",
+    "pages/index/index",
+    "pages/order/index",
+    "pages/search/index", 
+    "pages/login/index",
+    "pages/auth/index"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#23ebb9",
+    "navigationBarTitleText": "BreathPrint",
+    "navigationBarTextStyle":"white"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#23ebb9",
+    "backgroundColor": "#fafafa",
+    "position": "bottom",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "icons/home.png",
+        "selectedIconPath": "icons/home1-o.png"
+      }, 
+      {
+        "pagePath": "pages/category/index",
+        "text": "功能",
+        "iconPath": "icons/category.png",
+        "selectedIconPath": "icons/category-o.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "icons/my1.png",
+        "selectedIconPath": "icons/my1-o.png"
+      }
+    ]
+  },
+  
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
+
+
+
+
+
+
+
+
+
+
+
+

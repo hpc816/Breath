@@ -1,0 +1,26 @@
+
+<view class="container">
+
+    <view class='content'>
+
+        <image class="user-avatar" src="/image/touxiang.jpg"></image>
+
+        <input placeholder="账户" class='user-id' bindinput='getUsername' />
+
+        <input placeholder="密码" class='password' bindinput='getPassword' password='true' />
+
+        <button class='login' bindtap='loginClick' hover-class='login-hover'>登录</button>
+
+        <button class='register' bindtap='registerClick' hover-class='register-hover'>新用户请先注册</button>
+
+    </view>
+
+    <view class='triangle3'></view>
+
+    <view class='triangle4'></view>
+
+    <view class='triangle5'></view>
+
+    <view class='triangle6'></view>
+
+</view>

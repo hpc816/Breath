@@ -7,6 +7,7 @@ from python_speech_features import mfcc, delta, base
 ###########################################################
 import scipy.io.wavfile
 import scipy
+import numpy as np
 
 from spafe.utils import vis
 import spafe.features.mfcc as spfm
@@ -101,13 +102,23 @@ def GFCC(y, sr):
     #                          use_energy=False,
     #                          lifter=22,
     #                          normalize=1)
-    gfcc_feature=gfcc(y,sr,num_ceps=32,nfilts=40)
 
-    if len(gfcc_feature) == 0:
-        print >> sys.stderr, "ERROR.. failed to extract gfcc feature:", len(y)
+    gfcc_feature = gfcc(y, sr, num_ceps=32, nfilts=40)
+    #返回32维
     return gfcc_feature
 
 
+
+def GFCC2(y,sr):
+    gfcc_feature = gfcc(y, sr, num_ceps=32, nfilts=40)
+
+    #返回96维
+    d_gfcc_feature = delta(gfcc_feature, 1)
+    d2_gfcc_feature = delta(d_gfcc_feature, 1)
+    gfcc_feature_all = np.hstack((gfcc_feature, d_gfcc_feature, d2_gfcc_feature))
+    if len(gfcc_feature_all) == 0:
+        print >> sys.stderr, "ERROR.. failed to extract gfcc feature:", len(y)
+    return gfcc_feature_all
 
 
 # 音频文件特征提取【plp】
@@ -282,6 +293,37 @@ def ShowAll(y,sr):
     # print(psrccs.shape)
 
 
+def extraction(y,sr,featype):
+    '''
+    提取给定音频文件的指定特征
+    :param file: 音频文件路径
+    :param featype: 特征向量类型
+    :param sr:音频文件的采样率，缺省为16000
+    :return: 音频文件对应的特征矩阵
+    '''
+    feat=[]
+    #y, sr = li.load(file, sr=16000)
+    if featype == 'mfcc1':
+        feat = np.array(MFCC(y, sr))  # 提取MFCC特征(使用speech),并转换为np数组
+    elif featype == 'mfcc2':
+        feat = np.array(MFCC2(y, sr))  # 提取MFCC特征(使用spafe),并转换为np数组
+    elif featype == 'gfcc1':
+        feat = np.array(GFCC(y, sr))  # 提取GFCC特征(使用spafe),并转换为np数组
+    elif featype=='gfcc2':
+        feat=np.array(GFCC2(y,sr))
+    elif featype == 'plp':
+        feat = np.array(PLP(y, sr))
+
+    #异常处理
+    if len(feat)==0 :
+        featype_list=['mfcc1','mfcc2','gfcc1','gfcc2','plp']
+        if featype not in featype_list:
+            print('特征向量类型请在mfcc1，mfcc2,gfcc,plp中选择')
+        else:
+            print('出错了，检查一下输入吧')
+    return feat
+
+
 if __name__ == "__main__":
     #################################
     # init input vars
@@ -309,6 +351,6 @@ if __name__ == "__main__":
     # print(fs)
     # print("-------------------")
     # print(sig)
-    ShowAll(y,sr)
-
-
+    #ShowAll(y,sr)
+    feat=extraction(y,sr,featype='gfcc2')
+    print(feat.shape)
