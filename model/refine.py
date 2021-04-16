@@ -26,7 +26,7 @@ def refine(y, sr):
             if (j >= len(y)):
                 break
             else:
-                y_e[k] += y[j] * y[j] * (0.54 - 0.46 * np.cos((2 * np.pi * j) / (frame_size - 1)))  # 加上一个汉明窗口，使变化更加平滑
+                y_e[k] += y[j] * y[j] * (0.54 - 0.46 * np.cos((2 * np.pi * j) // (frame_size - 1)))  # 加上一个汉明窗口，使变化更加平滑
         k += 1
     k = 0
     for i in range(0, len(y), frame_size):
@@ -45,15 +45,16 @@ if __name__=="__main__":
 
     start_time=time.time()
     y_n=refine(y,sr)
+    print('y大小：',len(y),'y_n大小',len(y_n))
 
     print('refine操作所需时间：',time.time()-start_time)
-    # plt.figure()
-    # plt.subplot(2,1,1)
-    # lid.waveplot(y,sr)
-    # plt.title(' wavform')
-    #
-    # plt.subplot(2,1,2)
-    # lid.waveplot(y_n,sr)
-    # plt.title(' wavform_energy')
-    # plt.tight_layout() #保证图不重叠#
-    # plt.show()
+    plt.figure()
+    plt.subplot(2,1,1)
+    lid.waveplot(y,sr)
+    plt.title(' wavform')
+
+    plt.subplot(2,1,2)
+    lid.waveplot(y_n,sr)
+    plt.title(' wavform_energy')
+    plt.tight_layout() #保证图不重叠#
+    plt.show()

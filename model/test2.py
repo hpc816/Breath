@@ -283,7 +283,7 @@ if __name__ == "__main__":
     featype='gfcc1' #提取的特征向量类型
     verifytype='GMM_type2' #验证类型：GMM_type1:逐帧比较； GMM_type2:相邻帧比较； GMM_type3:整体比较
     gmmorder=6 #GMM超参数
-    refined=False #Login时是否对音频文件进行提纯操作
+    refined=True #Login时是否对音频文件进行提纯操作
 
     #获取上级目录
     pwd=os.path.abspath(os.path.join(os.getcwd(), ".."))
