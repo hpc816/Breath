@@ -75,7 +75,7 @@
     </view>
 
     <view class="item">
-      <navigator>
+      <navigator url='../login/index'>
         <view><image src='../../icons/caiji.png' class="breathpic"></image>
         </view>
       <view>
@@ -104,7 +104,13 @@
       <image src="../../icons/jiantou.png" class="jiantou"></image>
     </view>
   </navigator>
-  
+  <navigator url='../message/message'>
+    <view class="infor_item">
+      <image src='../../icons/notice.png'></image> 
+      <view><text decode='{{true}}'>推&nbsp;&nbsp;&nbsp;送</text></view>
+      <image src="../../icons/jiantou.png" class="jiantou"></image>
+    </view>
+  </navigator>
   <view class="infor_item">
     <image src='../../icons/beiwang.png'></image>
     <view>备忘录</view>

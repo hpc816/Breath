@@ -13,7 +13,8 @@
     "pages/order/index",
     "pages/search/index", 
     "pages/login/index",
-    "pages/auth/index"
+    "pages/auth/index",
+    "pages/message/message"
   ],
   "window":{
     "backgroundTextStyle":"light",

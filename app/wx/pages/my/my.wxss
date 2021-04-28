@@ -166,7 +166,7 @@ Page {
 
 .myinfor{
   margin: 20px 7.5px;
-  height: 335rpx;
+  height: 435rpx;
   background-color: #fff;
   border-radius: 7px;
   border: 1px solid #e6e6e6;

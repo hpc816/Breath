@@ -1,2 +1,36 @@
 <!--pages/login/index.wxml-->
-<text>pages/login/index.wxml</text>
+<view>
+  <view class="top">
+    <view class="top-word">
+      <text class="top-text">Please select a breathing mode</text>
+    </view>
+    <view class="center">
+      <!-- <view class="center_down">
+        <view class="center_rank" bindtap="toNone">
+          <button class="btn" hover-class="btn-class">Sniff</button>
+        </view>
+        <view class="center_score" bindtap="toNone">
+          <button class="btn" hover-class="btn-class">Deep breath</button>
+        </view>
+      </view> -->
+      <view class="switch-type">
+        <view class="btn {{currentSelectTripType == 'Sniff' ? 'active' : ''}}" bindtap='selectedSniff' data-id='Sniff'>Sniff</view>
+        <view class="btn {{currentSelectTripType == 'Deep breath' ? 'active' : ''}}" bindtap='selectedDeep' data-id='Deep breath'>Deep breath</view>
+      </view>
+      <!-- 录音按钮 -->
+      <view  class="voice-style" bindtap="startSpeak">
+        <image class="bg-style" src="../../icons/voice_icon_speaking_bg_normal-1.png" ></image>
+        <!-- 录音动画 -->
+        <view class="bg-style" animation="{{spreakingAnimation1}}" ><view class='v'><view class='v1'></view></view></view>
+        <view class="bg-style" animation="{{spreakingAnimation2}}" ><view class='v'><view class='v2'></view></view></view>
+        <view class="bg-style" animation="{{spreakingAnimation3}}" ><view class='v'><view class='v3'></view></view></view>
+        <image class="sound-style" src="../../icons/voice_icon_speech_sound_1.png" ></image>
+        <image wx:if="{{j==2}}" class="sound-style" src="../../icons/voice_icon_speech_sound_2-1.png" ></image>
+        <image wx:if="{{j==3}}" class="sound-style" src="../../icons/voice_icon_speech_sound_3-1.png" ></image>
+        <image wx:if="{{j==4}}" class="sound-style" src="../../icons/voice_icon_speech_sound_4-1.png" ></image>
+        <image wx:if="{{j==5}}"class="sound-style" src="../../icons/voice_icon_speech_sound_5-1.png" ></image>
+        </view>
+    </view>
+    <image src='http://docfile.funkingka.cn/FqzmiFqvXbHg-cfbquNRlawHUgHt' mode='scaleToFill' class='gif-wave'></image>
+  </view>
+</view>

@@ -1,0 +1,10 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "健康推文",
+
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FF7017",
+    "navigationBarTextStyle": "white"
+  }
+}
