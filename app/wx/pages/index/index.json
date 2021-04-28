@@ -1,6 +1,13 @@
 {
   "usingComponents": {
-    "SearchInput":"../../components/SearchInput/SearchInput"
+    "van-grid": "@vant/weapp/grid/index",
+    "van-grid-item": "@vant/weapp/grid-item/index",
+    "my-water":"/components/my-water2/my-water",
+    "van-circle": "@vant/weapp/circle/index",
+    "training-cont":"/components/training-cont/training-cont",
+    "ec-get":"/components/ec-get/ec-get",
+    "ec-duration":"/components/ec-duration/ec-duration",
+    "ec-out":"/components/ec-out/ec-out"
   },
-  "navigationBarTitleText": "首页"
+  "navigationBarTitleText": "BreathRoom"
 }

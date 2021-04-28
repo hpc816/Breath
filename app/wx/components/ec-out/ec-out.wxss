@@ -1,0 +1,12 @@
+/* components/ec-out/ec-out.wxss */
+ec-canvas{
+  width: 100%;
+  height: 470rpx;
+}
+.containers{
+  width: 100%;
+  height: 470rpx;
+  position: absolute;
+  top: 103rpx;
+
+}

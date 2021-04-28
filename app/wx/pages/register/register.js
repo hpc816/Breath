@@ -5,8 +5,37 @@ Page({
     selectType:'',
     startRecording:false,
     showVoiceMask:false,
-    recordAnimationNum:[]
+    recordAnimationNum:[],
+    buttons: [{ id: 1, name: 'sniff' }, { id: 2, name: 'deep' }],
   },
+
+  onLoad: function (options) {
+    this.data.buttons[0].checked = true;
+    this.setData({
+      buttons: this.data.buttons,
+    })
+  },
+
+  radioButtonTap: function (e) {
+    console.log(e);
+    let id = e.currentTarget.dataset.id;
+    console.log(id);
+    for (let i = 0; i < this.data.buttons.length; i++) {
+      if (this.data.buttons[i].id == id) {
+        //当前点击的位置为true即选中
+        this.data.buttons[i].checked = true;
+      }
+      else {
+        //其他的位置为false
+        this.data.buttons[i].checked = false;
+      }
+    }
+    this.setData({
+      buttons: this.data.buttons,
+      msg: "id:"+id
+    })
+  },
+
   //触发录音界面
   createRecording:function(e){
     this.setData({

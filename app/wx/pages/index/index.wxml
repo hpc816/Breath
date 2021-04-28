@@ -1,9 +1,79 @@
-<view class="bxx_index">
-    <!-- 搜索框开始 -->
-    <SearchInput></SearchInput>
-    <!-- 搜索框结束 -->
+<!--pages/day/day.wxml-->
+<view class='shopDetail-box'>
+    
+  
+    <view class="tab-right">
+      <view class="right-item {{tabArr.curBdIndex=='1'? 'active' : ''}}">
+        <!-- 健康得分 -->
+        <view class="efficiency">
+          <view class="date">
+            <image src="../../icons/xiangzuo.png" class="icon-left"></image> 
+            <!-- <view class="date-text">2021年04月28日</view> -->
+            <view class="date-text">{{time}}</view>
+            <image src="../../icons/xiangyou.png" class="icon-right"></image>
+          </view>
+          <view class="water" >
+           <my-water size="80"/>
+           <!-- <view>25%</view> -->
+          </view>
+          <navigator class="quality" style="margin-top:180rpx" url="../../pages/login/index">
+            <view>采集呼吸信息</view>
+          </navigator>
+          <view class="gist">您所记录的呼吸信息是我们为您提供建议的依据</view>
+        </view>
 
-    <!-- 轮播图开始 -->
+       <!-- BreathHealth -->
+        <view class="analyze" >
+          <view class="sleep-text"><view></view>BreathHealth<text>（最近30天）</text></view>
+          <view class="ec">
+            <ec-duration />
+          </view>
+        </view>
+        
+        <!-- 睡眠统计 -->
+        <view class="statistics">
+          <view class="sleep-text"><view></view>BreathRelax</view>
+            <view class="content">
+
+              <view>
+                <view style="margin-top:70rpx" class="training">
+                  <training-cont title="正念呼吸" cont="调整呼吸，帮助您缓解紧张焦虑" id="123" img="../../icons/zhengnian.png"  />
+                </view>
+              </view>
+             
+          </view>
+        </view>
+          <!-- 睡眠分析 -->
+          <view class="analysis">
+            <view class="sleep-text"><view></view>BreathFriend</view>
+            
+            <view class="nav">
+              <image class="ren" src="../../icons/girl2.jpg"></image>
+              <view>
+                <view class="se da">存在之前</view>
+                <view class="se" id="se">20岁 女生|现居杭州 </view>
+              </view>
+            </view>
+
+            <view class="nav">
+              <image class="ren" src="../../icons/girl1.jpg"></image>
+              <view>
+                <view class="se da">预售春天</view>
+                <view class="se" id="se">18岁 女生|现居成都 </view>
+              </view>
+            </view>
+          </view>
+      </view>
+
+    </view>
+  </view>
+
+<!-- 商城 -->
+<!-- <view class="bxx_index">
+    
+    <SearchInput></SearchInput>
+   
+
     <view class="index_swiper">
         <swiper autoplay circular indicator-dots="true">
             <swiper-item wx:for="{{swiperList}}" wx:key="goods_id">
@@ -13,5 +83,5 @@
             </swiper-item>
         </swiper>
     </view>
-    <!-- 轮播图结束 -->
-</view> 
+   
+</view>  -->

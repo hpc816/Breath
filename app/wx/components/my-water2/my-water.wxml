@@ -1,0 +1,20 @@
+<view class="boll">     
+        <view class="water w1" style="top:{{100-size}}%"></view>
+        <view class="water w2" style="top:{{100-size}}%"></view>
+        <view class="water" style="top:{{100-size}}%"></view>
+        <view class="percentage">70</view>
+        <view class="text">健康得分</view>
+</view>
+<view class="out">
+        <van-circle  size="{{cirsize}}" value="{{size}}" stroke-width="2" layer-color="#eaeefd" color="#64f1ce"/>
+</view>
+<view class="docbox">
+        <view class=" doc"></view>
+</view>
+<view  class="docbox" style="transform:rotate( {{size/100*360}}deg)">
+        <view class=" doc"></view>
+</view>
+
+
+
+

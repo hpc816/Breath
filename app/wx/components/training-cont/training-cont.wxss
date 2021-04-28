@@ -1,0 +1,87 @@
+
+.box{
+    width: 681rpx;
+    height: 180rpx;
+    box-shadow: 0rpx 0rpx 10rpx #ccc;
+    margin-left:38rpx;
+    border-radius:10rpx ;
+    /* margin-top: 58rpx; */
+    position: relative;
+}
+.box .leftimg{
+    width: 179rpx;
+    height: 168rpx;    
+    position: absolute;
+    left: -15rpx;
+    top:-27rpx;
+    border-radius: 10rpx;
+}
+
+.box .text{
+    height: 100%;
+    width: 515rpx;
+    margin-left: 165rpx;
+    position: relative;
+}
+.box .cont-top{
+    width: 100%;
+}
+.box .cont-top text{
+    display: inline-block;  
+}
+.box .cont-top .title{
+    /* width:134rpx;
+    height:45rpx; */
+    font-size: 32rpx;
+    color:rgba(51,51,51,1);
+    line-height:45rpx;
+    letter-spacing:1rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;  
+    position: absolute;
+    left:29rpx;
+    top:27rpx;
+}
+navigator{
+    display: inline-block;
+}
+.box .cont-top .gostudy{
+    /* width:77rpx;
+    height: 33rpx; */
+    font-size: 24rpx;
+    line-height: 33rpx;
+    letter-spacing:1rpx;
+    color:rgba(34,88,236,1);
+    font-family:PingFangHK-Regular,PingFangHK;
+    font-weight:400;
+    display: inline-block;
+    position: absolute;
+    left:393rpx;
+    top:33rpx;
+}
+
+.box .cont-top .go{  
+    width: 13rpx;
+    height:23rpx;
+    position: absolute;
+    left:476rpx;
+    top:38rpx
+}
+.box .cont{
+    /* width:460rpx;
+    height:33rpx; */
+    text-overflow: ellipsis;
+    color: #999999;
+    font-size:24rpx;
+    line-height: 33rpx;
+    letter-spacing:1rpx;
+    font-family:PingFangHK-Regular,PingFangHK;
+    font-weight:400;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    position: absolute;
+    left:29rpx;
+    top:86rpx
+}

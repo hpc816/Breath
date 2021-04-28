@@ -1,15 +1,15 @@
 {
   "pages":[
+    "pages/index/index",
     "pages/my/my",
     "pages/user/user",
+    "pages/register/register",
     "pages/picture/picture",
     "pages/photos/add",
     "pages/photos/photos",
     "pages/album/add",
-    "pages/register/register",
     "pages/test3/test3",
     "pages/category/index",
-    "pages/index/index",
     "pages/order/index",
     "pages/search/index", 
     "pages/login/index",
@@ -37,9 +37,9 @@
       }, 
       {
         "pagePath": "pages/category/index",
-        "text": "功能",
-        "iconPath": "icons/category.png",
-        "selectedIconPath": "icons/category-o.png"
+        "text": "功能", 
+        "iconPath": "icons/gongneng1.png",
+        "selectedIconPath": "icons/gongneng1-o.png"
       },
       {
         "pagePath": "pages/my/my",

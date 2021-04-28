@@ -9,14 +9,24 @@
             <!-- <image src="../../static/info_img.jpg"></image> -->
             <open-data type="userAvatarUrl" class="user_head"></open-data>
           </view>
-          <view class="center_info" bindtap="createRecording">
-                <view class="inputbox">
-                    <input name='voice' type='text' placeholder='声纹录入~'></input>
-                    <image src='../../icons/gengxin.png' class="gengxin"></image>
-                </view>
+          <view>
+            <view class="center_info" bindtap="createRecording">
+                  <view class="inputbox">
+                      <input name='voice' type='text' placeholder='声纹录入~'></input>
+                      <image src='../../icons/gengxin.png' class="gengxin"></image>
+                  </view>
+            </view>
+            <view class="button_container">
+              <!-- <button class="lbtn">sniff</button>
+              <button class="rbtn">deep</button> -->
+              <block wx:for="{{buttons}}" wx:key="buttons">
+                <button class='{{item.checked?"checked_button":"normal_button"}}' data-id='{{item.id}}' bindtap='radioButtonTap'>{{item.name}}</button>
+              </block>
+            </view>
           </view>
+         
         </view>
-
+       
         <!-- 录入用户信息 -->
         
         <view class="center_down">

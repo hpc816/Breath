@@ -1,0 +1,4 @@
+<!--computeds/ec-get/ec-get.wxml-->
+<view class="containers">
+  <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
+</view>

@@ -1,0 +1,13 @@
+
+<view class="box">
+    <image class="leftimg" src="{{img}}"></image>
+    <view class="text">
+        <view class="cont-top ">
+            <text class="title">{{title}}</text>
+            <navigator url="/pages/TrainingContent/TrainingContent?id={{id}}"><view class="gostudy">去放松<view class="go"></view></view></navigator>
+        </view>
+        <view class="cont">
+            {{cont}}
+        </view>
+    </view>
+</view>
