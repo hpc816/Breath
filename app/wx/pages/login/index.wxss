@@ -1,1 +1,171 @@
 /* pages/login/index.wxss */
+.top {
+  width: 100%;
+  height: 250px;
+  background: #23EBB9;
+  padding-top: 45px;
+  position: relative;
+}
+
+.top-word{
+  width: 80%;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  border-radius: 5px;
+  align-items: center;
+}
+
+.top-text{
+  width: 100%;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  border-radius: 5px;
+  color:white;
+  font-size: 34rpx;
+  align-items: center;
+  font-weight: 700;
+}
+
+.center {
+  width: 60%;
+  height: 60px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+.center_top {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  height: 80px;
+  margin: 0 auto;
+  margin-top: 20rpx;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.center_img {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.center_img image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.center_down {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  height: 35px;
+  margin: 0 auto;
+  margin-top: 20rpx;
+}
+
+.center_rank {
+  width: 50%;
+  height: 35px;
+  display: flex;
+  flex-direction: row;
+}
+
+.btn{
+  color: #BEBEBE;
+}
+
+.btn-class{
+  color: black;
+} 
+
+.switch-type {
+  display: flex;
+}
+.switch-type .btn:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.switch-type .btn:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.switch-type .btn {
+  background: #dfdfdf;
+  padding: 10rpx 40rpx;
+}
+.switch-type .btn.active {
+  border: 2rpx solid #007bff;
+  background: #fff;
+}
+
+.center_score {
+  width: 50%;
+  height: 35px;
+  display: flex;
+  flex-direction: row;
+}
+
+.center_score image {
+  width: 35px;
+  height: 35px;
+}
+
+.gif-wave {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  mix-blend-mode: screen;
+  height: 100rpx;
+}
+
+.voice-style {
+  margin-top: 450rpx;
+  width: 60%;
+  display: flex;
+  position: absolute;
+  z-index: 100;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bg-style {
+  position: absolute;
+  border-radius: 100%;
+  border: 2rpx solid rgb(228, 178, 71);
+  width: 100px;
+  height: 100px;
+}
+.v{
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.v1{
+  position: absolute;
+  top:0;
+}
+.v2{
+  position: absolute;
+  right:0;
+}
+.v3{
+  position: absolute;
+  bottom:0;
+}
+.sound-style{
+  position: absolute;
+  width: 37.6px;
+  height: 60px;
+  margin-top: 40rpx;
+}
