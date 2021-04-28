@@ -18,7 +18,7 @@
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#23ebb9",
-    "navigationBarTitleText": "BreathPrint",
+    "navigationBarTitleText": "BreathRoom",
     "navigationBarTextStyle":"white"
   },
   "tabBar": {

@@ -32,7 +32,7 @@ def task_enroll(input_dir, output_model,featype,gmmorder,refined=False):
         plp：通过spafe实现的PLP，维度：
     :param gmm_order:GMM模型超参数
     :param refined:是否进行提纯操作
-    :return
+    :return 训练好的模型
     '''
     # 初始化GMM模型
     model = GMMModel(gmmorder)
@@ -78,6 +78,7 @@ def task_enroll(input_dir, output_model,featype,gmmorder,refined=False):
     model.train()
     # 保存训练好的模型
     model.save(output_model)
+
 
 
 def read_wav(fname):

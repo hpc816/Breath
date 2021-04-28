@@ -4,9 +4,11 @@
 import sys
 
 from flask import Flask, render_template, request, json
-from db import *
+
+sys.path.append('../../') #将根目录Breath引入导包路径
+
 import os
-import test2
+from model import test2
 
 app = Flask(__name__)
 
