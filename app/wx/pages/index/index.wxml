@@ -7,10 +7,10 @@
         <!-- 健康得分 -->
         <view class="efficiency">
           <view class="date">
-            <image src="../../icons/xiangzuo.png" class="icon-left"></image> 
+            <image src="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/xiangzuo.png" class="icon-left"></image> 
             <!-- <view class="date-text">2021年04月28日</view> -->
             <view class="date-text">{{time}}</view>
-            <image src="../../icons/xiangyou.png" class="icon-right"></image>
+            <image src="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/xiangyou.png" class="icon-right"></image>
           </view>
           <view class="water" >
            <my-water size="80"/>
@@ -37,7 +37,7 @@
 
               <view>
                 <view style="margin-top:70rpx" class="training">
-                  <training-cont title="正念呼吸" cont="调整呼吸，帮助您缓解紧张焦虑" id="123" img="../../icons/zhengnian.png"  />
+                  <training-cont title="正念呼吸" cont="调整呼吸，帮助您缓解紧张焦虑" id="123" img="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/zhengnian.png"  />
                 </view>
               </view>
              
@@ -48,7 +48,7 @@
             <view class="sleep-text"><view></view>BreathFriend</view>
             
             <view class="nav">
-              <image class="ren" src="../../icons/girl2.jpg"></image>
+              <image class="ren" src="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/girl2.jpg"></image>
               <view>
                 <view class="se da">存在之前</view>
                 <view class="se" id="se">20岁 女生|现居杭州 </view>
@@ -56,7 +56,7 @@
             </view>
 
             <view class="nav">
-              <image class="ren" src="../../icons/girl1.jpg"></image>
+              <image class="ren" src="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/girl1.jpg"></image>
               <view>
                 <view class="se da">预售春天</view>
                 <view class="se" id="se">18岁 女生|现居成都 </view>

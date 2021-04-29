@@ -5,7 +5,7 @@
       </view>
       <view class='btn-box'>
           <button type='primary' form-type='submit' plain='true' style='border:none;display:table-cell;text-align:center;padding-left:0'>
-              <image style='width:700rpx;height:135rpx;' src='../../icons/submit.png'></image>
+              <image style='width:700rpx;height:135rpx;' src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/submit.png'></image>
           </button>
       </view>
   </form>

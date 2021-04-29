@@ -13,7 +13,7 @@
             <view class="center_info" bindtap="createRecording">
                   <view class="inputbox">
                       <input name='voice' type='text' placeholder='声纹录入~'></input>
-                      <image src='../../icons/gengxin.png' class="gengxin"></image>
+                      <image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/gengxin.png' class="gengxin"></image>
                   </view>
             </view>
             <view class="button_container">
@@ -31,22 +31,22 @@
         
         <view class="center_down">
           <view class="down_box" bindtap="toNone">
-            <image class="infor_icon" src="../../icons/yonghuming.png"></image>
+            <image class="infor_icon" src="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/yonghuming.png"></image>
             <input type="text" placeholder='用户名' class="usrinfor"></input>
           </view>
 
           <view class="down_box" bindtap="toNone">
-            <image class="infor_icon" src="../../icons/mima.png"></image>
+            <image class="infor_icon" src="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/mima.png"></image>
             <input type="text" placeholder='密码' class="usrinfor"></input>
           </view>
 
           <view class="down_box" bindtap="toNone">
-            <image class="infor_icon" src="../../icons/youxiang.png"></image>
+            <image class="infor_icon" src="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/youxiang.png"></image>
             <input type="text" placeholder='邮箱' class="usrinfor"></input>
           </view>
 
           <view class="down_box" bindtap="toNone">
-            <image class="infor_icon" src="../../icons/yanzhengma.png"></image>
+            <image class="infor_icon" src="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/yanzhengma.png"></image>
             <input type="text" placeholder='验证码' class="usrinfor"></input>
           </view>
 
@@ -60,9 +60,9 @@
 
 <view class='voice-enter-note' wx:if="{{showVoiceMask && !startRecording}}"></view>
 <image class='voice-enter-note-image'
-    src='../../icons/bgc4.png'
+    src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/bgc4.png'
     wx:if="{{showVoiceMask && !startRecording}}"></image>
-<image src='../../icons/voi2.png'
+<image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/voi2.png'
     class='voice-button' wx:if="{{showVoiceMask}}" bindtouchstart="startRecording" bindtouchend="stopRecording"
     bindtouchmove="moveToCancle"></image>
   
@@ -70,19 +70,19 @@
 
 <view class='record-voice-animations' wx:if="{{showVoiceMask && startRecording && !cancleRecording}}">
 
-      <image src='../../icons/speaker_0_fill.png'
+      <image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/speaker_0_fill.png'
         wx:if="{{recordAnimationNum===1}}"></image>
 
-      <image src='../../icons/speaker_1_fill.png'
+      <image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/speaker_1_fill.png'
         wx:if="{{recordAnimationNum===2}}"></image>
 
-      <image src='../../icons/speaker_2_fill.png'
+      <image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/speaker_2_fill.png'
         wx:if="{{recordAnimationNum===3}}"></image>
 
-      <image src='../../icons/speaker_3_fill.png'
+      <image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/speaker_3_fill.png'
         wx:if="{{recordAnimationNum===4}}"></image>
         
-      <image src='../../icons/speaker_3_fill.png'
+      <image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/speaker_3_fill.png'
         wx:if="{{recordAnimationNum===0}}"></image>
     <!--   <image src='../../icons/bgc4.png'
         wx:if="{{recordAnimationNum===0}}"></image> -->
@@ -92,6 +92,6 @@
 <view class='cancle-record-voice' wx:if="{{showVoiceMask && startRecording && cancleRecording}}">
 
         <image
-        src='../../icons/chexiao.png'>
+        src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/chexiao.png'>
     </image>
   </view>

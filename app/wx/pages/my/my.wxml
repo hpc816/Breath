@@ -14,11 +14,11 @@
       </view>
       <view class="center_down">
         <view class="center_rank" bindtap="toNone">
-          <image class="rank_icon" src="../../icons/infor1.png"></image>
+          <image class="rank_icon" src="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/infor1.png"></image>
           <text class="rank_text">个人信息</text>
         </view>
         <view class="center_score" bindtap="toNone">
-          <image class="rank_icon" src="../../icons/shoucang2.png"></image>
+          <image class="rank_icon" src="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/shoucang2.png"></image>
           <text class="rank_text">我的收藏</text>
         </view>
       </view>
@@ -66,7 +66,7 @@
 
     <view class="item">
       <navigator url='../register/register'>
-        <view><image src='../../icons/ident.png' class="breathpic"></image>
+        <view><image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/ident.png' class="breathpic"></image>
           </view>
         <view>
           声纹识别
@@ -76,7 +76,7 @@
 
     <view class="item">
       <navigator url='../login/index'>
-        <view><image src='../../icons/caiji.png' class="breathpic"></image>
+        <view><image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/caiji.png' class="breathpic"></image>
         </view>
       <view>
         重新采集
@@ -86,7 +86,7 @@
 
     <view class="item">
       <navigator>
-        <view><image src='../../icons/gongneng.png' class="breathpic"></image>
+        <view><image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/gongneng.png' class="breathpic"></image>
         </view>
       <view>
         功能页面
@@ -99,26 +99,26 @@
 <view class="myinfor">
   <navigator url='../picture/picture'>
     <view class="infor_item">
-      <image src='../../icons/photo.png'></image>
+      <image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/photo.png'></image>
       <view><text decode='{{true}}'> 相&nbsp;&nbsp;&nbsp;册</text></view>
-      <image src="../../icons/jiantou.png" class="jiantou"></image>
+      <image src="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/jiantou.png" class="jiantou"></image>
     </view>
   </navigator>
   <navigator url='../message/message'>
     <view class="infor_item">
-      <image src='../../icons/notice.png'></image> 
+      <image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/notice.png'></image> 
       <view><text decode='{{true}}'>推&nbsp;&nbsp;&nbsp;送</text></view>
-      <image src="../../icons/jiantou.png" class="jiantou"></image>
+      <image src="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/jiantou.png" class="jiantou"></image>
     </view>
   </navigator>
   <view class="infor_item">
-    <image src='../../icons/beiwang.png'></image>
+    <image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/beiwang.png'></image>
     <view>备忘录</view>
-    <image src="../../icons/jiantou.png" class="jiantou"></image>
+    <image src="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/jiantou.png" class="jiantou"></image>
   </view>
   <view class="infor_item">
-    <image src='../../icons/NFC.png'></image>
+    <image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/NFC.png'></image>
     <view>NFC卡</view>
-    <image src="../../icons/jiantou.png" class="jiantou"></image>
+    <image src="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/jiantou.png" class="jiantou"></image>
   </view>
 </view>

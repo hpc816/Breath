@@ -21,7 +21,8 @@
   
   <view class='options'>
     <navigator class='add-item' url='/pages/album/add'>
-      <image class='add-item' src='../../icons/addAlbum.png'></image>
+      <!-- <image class='add-item' src='https://ftp.bmp.ovh/imgs/2021/04/31381855e288f89c.png'></image> -->
+      <image class='add-item' src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/addAlbum.png'></image>
     </navigator>      
   </view>
   
