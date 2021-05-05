@@ -112,8 +112,8 @@ Page({
       // 上传文件
       setTimeout(function () {
         var selected_mode=(_this.data.currentSelectTripType=='Sniff'?'sniff':'deep');
-        var urls = `http://47.97.21.75/upload/${selected_mode}/hpc`; // 服务器地址
-        // var urls = `http://47.97.21.75/upload/${selected_mode}/${app.globalData.userInfo.nickName}`; // 服务器地址
+        // var urls = `http://47.97.21.75/upload/${selected_mode}/hpc`; // 服务器地址
+        var urls = `http://47.97.21.75/upload/${selected_mode}/${app.globalData.userInfo.nickName}`; // 服务器地址
         console.log('uploadbegin',urls);
 
         wx.uploadFile({

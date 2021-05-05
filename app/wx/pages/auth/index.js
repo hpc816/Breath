@@ -111,8 +111,8 @@ Page({
         } = res;
         
         var selected_mode=(_this.data.currentSelectTripType=='Sniff'?'sniff':'deep');
-        var urls = `http://47.97.21.75/auth/${selected_mode}/hpc`; // 服务器地址
-        // var urls = `http://47.97.21.75/auth/${selected_mode}/${app.globalData.userInfo.nickName}`; // 服务器地址
+        // var urls = `http://47.97.21.75/auth/${selected_mode}/hpc`; // 服务器地址
+        var urls = `http://47.97.21.75/auth/${selected_mode}/${app.globalData.userInfo.nickName}`; // 服务器地址
         //train
         var urltrain = `http://47.97.21.75/train/${selected_mode}`; 
         console.log('authbegin',urls);
