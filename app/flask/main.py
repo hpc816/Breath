@@ -6,7 +6,7 @@ from friend import app_friend
 
 app=Flask(__name__)
 
-# 注册蓝图
+
 app.register_blueprint(app_auth,url_prefix='/auth')
 app.register_blueprint(app_train,url_prefix='/train')
 app.register_blueprint(app_upload,url_prefix='/upload')
@@ -19,5 +19,8 @@ def index():
 
 
 if __name__=='__main__':
-    #print(app.url_map)
+
     app.run(debug=True)
+
+
+

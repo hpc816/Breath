@@ -2,8 +2,10 @@
   "pages":[
     "pages/index/index",
     "pages/my/my",
+    "pages/auth/index",
+    "pages/login/index",
     "pages/user/user",
-    "pages/register/register",
+    "pages/register/register", 
     "pages/picture/picture",
     "pages/photos/add",
     "pages/photos/photos",
@@ -12,8 +14,6 @@
     "pages/category/index",
     "pages/order/index",
     "pages/search/index", 
-    "pages/login/index",
-    "pages/auth/index",
     "pages/message/message"
   ],
   "window":{

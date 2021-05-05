@@ -65,11 +65,11 @@
 <view class="usr_tools">
 
     <view class="item">
-      <navigator url='../register/register'>
+      <navigator url='../auth/index' catchtap="getUserProfile">
         <view><image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/ident.png' class="breathpic"></image>
           </view>
         <view>
-          声纹识别
+          声纹认证
         </view>
       </navigator>
     </view>
@@ -85,11 +85,11 @@
     </view>
 
     <view class="item">
-      <navigator>
+      <navigator url='../register/register'>
         <view><image src='http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/gongneng.png' class="breathpic"></image>
         </view>
       <view>
-        功能页面
+        功能注册
       </view>
       </navigator>
     </view>

@@ -144,3 +144,11 @@
   height: 60px;
   margin-top: 40rpx;
 }
+
+.Success{
+  position: absolute;
+  margin-top: 580rpx;
+  margin-left: 340rpx;
+  height: 60rpx;
+  width: 60rpx;
+}

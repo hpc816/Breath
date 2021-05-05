@@ -31,6 +31,8 @@
         <image wx:if="{{j==5}}"class="sound-style" src="http://breathroom.oss-cn-chengdu.aliyuncs.com/icons/voice_icon_speech_sound_5-1.png" ></image>
         </view>
     </view>
+    <!-- <view class='Success' wx:if="{{upSuccess}}"></view> -->
+    <image src='../../icons/success.png' class='Success' wx:if="{{upSuccess}}"></image>
     <image src='http://docfile.funkingka.cn/FqzmiFqvXbHg-cfbquNRlawHUgHt' mode='scaleToFill' class='gif-wave'></image>
   </view>
 </view>

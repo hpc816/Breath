@@ -77,6 +77,7 @@ page{
   top: 69rpx;
   margin:  0 auto;
   /* color:white; */
+  /* z-index: -1; */
 }
 .efficiency-title{
   width: 100%;
@@ -86,9 +87,10 @@ page{
 }
 
 .efficiency .quality{
+  position: absolute;
   border-radius:29rpx;
   background:rgba(34,88,236,1);
-  margin-top:68rpx;
+  margin-top:180rpx;
   margin-left:245rpx;
   display: inline-block;
 }
@@ -110,7 +112,7 @@ page{
   font-size: 24rpx;
   color:rgba(153,153,153,1);
   letter-spacing: 1rpx;
-  margin-top:21rpx;
+  margin-top:261rpx;
   margin-left:110rpx;
 }
 

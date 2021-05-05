@@ -1,11 +1,11 @@
-#本模块用于求两个集合的交集
+
 import json
 
 from flask import Blueprint, request, jsonify
 from .intersection import intersection
 
 
-#创建一个蓝图
+
 app_friend=Blueprint('app_friend',__name__)
 
 
@@ -19,7 +19,6 @@ def index():
     ret= intersection(set1,set2)
     ret=list(ret.intersection(ret))
     ret=','.join(ret)
-    #print(set1,set2)
+
 
     return jsonify(intersection=ret)
-    #return 'friend page'

@@ -1,4 +1,4 @@
-#求两个集合之间的交集
+
 
 
 def intersection(set1,set2):

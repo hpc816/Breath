@@ -1,24 +1,45 @@
 // pages/index/index.js
 // 获取应用实例
 var app = getApp()
+const recorderManager = wx.getRecorderManager()
+
 Page({
   data: {
     spreakingAnimation: {},// 放大动画
+    upSuccess: false,
     j: 1,// 帧动画初始图片
     isSpeaking: false,// 是否在录音状态
-    recordPath: "", // 临时路径
+    // recordPath: "", // 临时路径
     mode: 0 ,// 呼吸模式 0-未选择 1-sniff 2-deep
+    uid:'',
+    recordingTimeqwe: 0, //录音计时
     currentSelectTripType: 'Sniff' // 呼吸模式
   },
+
+    //录音计时器
+    recordingTimer: function() {
+      var that = this;
+      //将计时器赋值给setInter
+      that.data.setInter = setInterval(
+        function() {
+          var time = that.data.recordingTimeqwe + 1;
+          that.setData({
+            recordingTimeqwe: time
+          })
+        }, 1000);
+    },
+  
   selectedSniff: function (e) {
     this.setData({
       currentSelectTripType: e.currentTarget.dataset.id
-    })
+    }),
+    console.log(this.data.currentSelectTripType);
   },
   selectedDeep: function(e) {
     this.setData({
       currentSelectTripType: e.currentTarget.dataset.id
-    })
+    });
+    console.log(this.data.currentSelectTripType);
   },
   onReady: function () {
     this.animation1 = wx.createAnimation({ duration: 1000, })
@@ -26,36 +47,119 @@ Page({
     this.animation3 = wx.createAnimation({ duration: 1000, })
   },
   onLoad: function () {
+      
   },
   //点击录音按钮
   startSpeak: function () {
     var _this = this;
     if (!this.data.isSpeaking) {
+      var that=this;
       //开始录音
       this.setData({
         isSpeaking: true
       })
       speaking.call(this);
+      
+      const options = {
+        sampleRate: 16000, //采样率
+        numberOfChannels: 1, //录音通道数
+        format: 'wav', //音频格式，有效值 aac/mp3
+      }
 
-      wx.startRecord({
-        success: function (res) {
-          //录音成功，保存路径
-          var tempFilePath = res.tempFilePath;
-          console.log(res)
-          _this.setData({
-            recordPath: tempFilePath
-          });
-        },
-        fail: function (res) {
-          //录音失败 
-          wx.showModal({
-            title: '提示',
-            content: '录入失败',
-            showCancel: false
-          })
-        }
+      //开始录音计时
+      that.recordingTimer();
+      //开始录音
+      recorderManager.start(options);
+      recorderManager.onStart(() => {
+        console.log('开始录音')
+      });
+      //错误回调
+      recorderManager.onError((res) => {
+        console.log(res);
       })
+
+      // wx.startRecord({
+      //   success: function (res) {
+      //     //录音成功，保存路径
+      //     var tempFilePath = res.tempFilePath;
+      //     console.log(res)
+      //     _this.setData({
+      //       recordPath: tempFilePath
+      //     });
+      //   },
+      //   fail: function (res) {
+      //     //录音失败 
+      //     wx.showModal({
+      //       title: '提示',
+      //       content: '录入失败',
+      //       showCancel: false
+      //     })
+      //   }
+      // })
+
     } else {
+      recorderManager.stop();
+
+      recorderManager.onStop((res) => {
+        const that = this
+        // let timestamp = util.formatTime2(new Date());
+
+        console.log('停止录音', res.tempFilePath)
+        const {
+          tempFilePath
+        } = res;
+
+      // 上传文件
+      setTimeout(function () {
+        var selected_mode=(_this.data.currentSelectTripType=='Sniff'?'sniff':'deep');
+        var urls = `http://47.97.21.75/upload/${selected_mode}/hpc`; // 服务器地址
+        // var urls = `http://47.97.21.75/upload/${selected_mode}/${app.globalData.userInfo.nickName}`; // 服务器地址
+        console.log('uploadbegin',urls);
+
+        wx.uploadFile({
+          url: urls,
+          filePath: tempFilePath, 
+          name: 'wav',
+          formData: {
+          },
+          header: { 'Content-Type': 'multipart/form-data' },  
+          success: function (res) {
+            console.log(res);
+            console.log("录入成功");
+            that.setData({upSuccess:true});
+            
+            var json1=JSON.parse(res.data);
+            app.globalData.upload_filepath=json1['filepath'];
+            console.log(app.globalData.upload_filepath)
+          },
+          fail: function (res) {
+            console.log(res);
+            wx.showModal({
+              title: '提示',
+              content: "网络请求失败，请确保网络是否正常",
+              showCancel: false,
+              success: function (res) {
+              }
+            });
+            wx.hideToast();
+          }
+        });
+      }, 1000)
+        
+        // wx.cloud.uploadFile({
+        //   cloudPath: "sounds/"+timestamp + '-' + this.randomNum(10000, 99999) + '.mp3',
+        //   filePath: tempFilePath,
+        //   // 成功回调
+        //   success: res => {
+        //     console.log('上传成功', res)
+        //     that.setData({
+        //       soundUrl: res.fileID,
+        //       // time: util.formatTime1(new Date())
+        //     })
+        //   },
+        // })
+
+      })
       //停止录音
       clearInterval(this.timer)
       this.setData({
@@ -63,29 +167,36 @@ Page({
         j: 1,
       })
 
-      wx.stopRecord()
+      // wx.stopRecord()
       // setTimeout(function () {
-      //   var urls = " "; // 服务器地址
-      //   wx.uploadFile({
-      //     url: urls,
-      //     filePath: _this.data.recordPath,
-      //     name: 'file',
-      //     formData: { },
-      //     header: { 'content-type': 'multipart/form-data' },
-      //     success: function (res) {
-      //       console.log("录入成功")
-      //     },
-      //     fail: function (res) {
-      //       wx.showModal({
-      //         title: '提示',
-      //         content: "网络请求失败，请确保网络是否正常",
-      //         showCancel: false,
-      //         success: function (res) {
-      //         }
-      //       });
-      //       wx.hideToast();
-      //     }
-      //   });
+      //   var selected_mode=(_this.data.currentSelectTripType=='Sniff'?'sniff':'deep');
+      //   var urls = `https://47.97.21.75/upload/${selected_mode}/${app.globalData.userInfo.nickName}`; // 服务器地址
+      //   console.log(urls);
+
+        // wx.uploadFile({
+        //   url: urls,
+        //   filePath: _this.data.recordPath,
+        //   name: 'wav',
+        //   formData: {
+        //   },
+        //   header: { 'content-type': 'multipart/form-data' },
+        //   success: function (res) {
+        //     console.log(res);
+        //     console.log(_this.data.recordPath);
+        //     console.log("录入成功");
+        //   },
+        //   fail: function (res) {
+        //     console.log(urls);
+        //     wx.showModal({
+        //       title: '提示',
+        //       content: "网络请求失败，请确保网络是否正常",
+        //       showCancel: false,
+        //       success: function (res) {
+        //       }
+        //     });
+        //     wx.hideToast();
+        //   }
+        // });
       // }, 1000)
     }
   },

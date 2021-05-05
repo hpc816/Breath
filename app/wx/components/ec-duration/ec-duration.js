@@ -15,7 +15,7 @@ function initChart(canvas, width, height) {
   xAxis: {
     type: 'category',
     boundaryGap: false,
-    data: ['3/25', '3/30', '4/05', '4/10', '4/15', '4/20', '4/28'],
+    data: ['4/10', '4/15', '4/20', '4/25', '4/30', '5/05', '5/10'],
     axisLine:{
       show:false
     },
